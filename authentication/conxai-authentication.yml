@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/conxai-customer-openapi.json, openapi/conxai-docnostic-openapi.json, openapi/conxai-firestop-openapi.json,
+  openapi/conxai-production-tracking-openapi.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-Api-Key
+  description: Provide the given API key
+  sources:
+  - openapi/conxai-customer-openapi.json
+  - openapi/conxai-docnostic-openapi.json
+  - openapi/conxai-firestop-openapi.json
+- name: BearerAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+  sources:
+  - openapi/conxai-docnostic-openapi.json
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  sources:
+  - openapi/conxai-production-tracking-openapi.json
