@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations production_tracking API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: production_tracking
+paths:
+  /weather:
+    get:
+      tags:
+      - production_tracking
+      summary: Weather
+      description: This endpoint retrieves weather data for a given latitude and longitude. It uses the OpenMeteo API to fetch the weather forecast
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: string
+        example: '{{lat}}'
+      - name: long
+        in: query
+        schema:
+          type: string
+        example: '{{long}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{project_ID}/postprocess:
+    get:
+      tags:
+      - production_tracking
+      summary: Postprocess
+      description: This endpoint handles the postprocessing of production tracking data for a given project. It generates two basic graphs (ring_count and phase_count) based on the project type.
+      parameters:
+      - name: project_ID
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{project_ID}/logs:
+    get:
+      tags:
+      - production_tracking
+      summary: Logs
+      description: This endpoint retrieves the logs for a given project.
+      parameters:
+      - name: project_ID
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{project_ID}//graphs:
+    post:
+      tags:
+      - production_tracking
+      summary: Graphs
+      description: This endpoint generates graphs based on the provided filters and configurations for a given project. It creates various graphs such as ring count, phase count, ring duration, and phase duration.
+      requestBody:
+        content: {}
+      parameters:
+      - name: start
+        in: query
+        schema:
+          type: string
+        example: '{{start}}'
+      - name: end
+        in: query
+        schema:
+          type: string
+        example: '{{end}}'
+      - name: project_ID
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

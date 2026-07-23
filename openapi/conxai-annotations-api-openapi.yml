@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: annotations
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/annotations:
+    delete:
+      security:
+      - BearerAuth: []
+      description: Delete annotations
+      tags:
+      - annotations
+      summary: Delete annotations
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: "Server\tfelt bad"
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

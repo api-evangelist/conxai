@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations camera API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: camera
+paths:
+  /camera:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: Create new camera
+      tags:
+      - camera
+      summary: Create new camera
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_handlers.CameraRequest'
+        description: process project request
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_handlers.CameraResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /camera-info/:cameraExternalId:
+    get:
+      description: Get camera info
+      tags:
+      - camera
+      summary: Get camera info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transformers.CameraInfoResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transformers.CameraInfoResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+  /camera/:uuid:
+    get:
+      description: Get camera
+      tags:
+      - camera
+      summary: Get camera
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_handlers.CameraResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      description: Delete camera
+      tags:
+      - camera
+      summary: Delete camera
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/:projectId/cameras:
+    get:
+      description: Get cameras by project id
+      tags:
+      - camera
+      summary: Get cameras by project id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/transformers.CameraByProjectId'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/transformers.CameraByProjectId'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    transformers.CameraInfoResponse:
+      type: object
+      properties:
+        camera_external_id:
+          type: string
+        camera_internal_id:
+          type: string
+        project_external_id:
+          type: string
+        project_internal_id:
+          type: string
+        project_timezone:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    transformers.CameraByProjectId:
+      type: object
+      properties:
+        external_id:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+    api_handlers.CameraResponse:
+      type: object
+      properties:
+        external_id:
+          description: Camera external id
+          type: string
+        name:
+          description: Camera name
+          type: string
+        project_uuid:
+          description: Project uuid
+          type: string
+        uuid:
+          description: Uniq camera id
+          type: string
+    api_handlers.CameraRequest:
+      type: object
+      properties:
+        external_id:
+          description: Camera external id
+          type: string
+        name:
+          description: Camera name
+          type: string
+        project_uuid:
+          description: Project uuid
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

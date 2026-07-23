@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations schema API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: schema
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/schemas/{schema}/version/{version}:
+    get:
+      security:
+      - BearerAuth: []
+      description: Get Schema by version
+      tags:
+      - schema
+      summary: Get Schema
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Schema UUID
+        name: schema
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Schema version
+        name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

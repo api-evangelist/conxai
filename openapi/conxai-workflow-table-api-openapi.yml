@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations workflow-table API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: workflow-table
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/create:
+    post:
+      security:
+      - BearerAuth: []
+      description: Triggers workflow table generation asynchronously and returns immediately. Poll /processing-status to track completion.
+      tags:
+      - workflow-table
+      summary: Create workflow table data
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workflow table creation triggered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/edited:
+    put:
+      security:
+      - BearerAuth: []
+      description: Persists client edits to the workflow table as a separate file so AI regeneration never overwrites user changes. The client sends a single page (same shape as the filter endpoint response) together with the offset/limit that produced it. The handler loads the current table (the edited file when it already exists, otherwise the AI-generated base), re-applies the default sort so positions line up with what the client saw, overwrites the [offset, offset+len) window with the incoming rows, and writes the result back to the edited file. Rows outside the window are preserved. The GET/filter endpoints always return this edited version when it exists.
+      tags:
+      - workflow-table
+      summary: Save a page of user-edited workflow table data
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Row offset of the page being saved
+        name: offset
+        in: query
+        schema:
+          type: integer
+      - description: Page size of the page being saved
+        name: limit
+        in: query
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataResponse'
+        description: Edited page of the workflow table
+        required: true
+      responses:
+        '200':
+          description: Saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+        '400':
+          description: Invalid JSON body or query params
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+  /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/processing-status:
+    get:
+      security:
+      - BearerAuth: []
+      description: 'Returns the processing status of the workflow table generation for this use case.
+
+        Status values:
+
+        - `idle` — workflow has never been triggered (summary_table.json does not exist)
+
+        - `processing` — workflow is currently running (result file missing or older than trigger file)
+
+        - `completed` — workflow finished successfully (summary_table_workflow.json is newer than summary_table.json)
+
+        Derived from S3 file timestamps — no K8s access required.'
+      tags:
+      - workflow-table
+      summary: Get workflow table processing status
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Status response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.WorkflowProcessingStatusResponse'
+components:
+  schemas:
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    conxai_com_docs-api_structures_api.SummaryTableDataStructure:
+      type: object
+      properties:
+        use_case:
+          type: string
+    conxai_com_docs-api_structures_api.SummaryTableDataResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataStructure'
+    conxai_com_docs-api_structures_api.SummaryTableCell:
+      type: object
+      properties:
+        is_applicable: {}
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessage'
+        value: {}
+    conxai_com_docs-api_structures_api.WorkflowProcessingStatusResponse:
+      type: object
+      properties:
+        status:
+          description: 'Current processing status of the workflow table generation.
+
+            Possible values: idle, processing, completed.'
+          enum:
+          - idle
+          - processing
+          - completed
+          allOf:
+          - $ref: '#/components/schemas/conxai_com_docs-api_structures_api.WorkflowProcessingStatus'
+    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
+    conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
+      type: string
+      enum:
+      - success
+      - warning
+      - error
+      x-enum-varnames:
+      - SummaryTableCellMessageTypeSuccess
+      - SummaryTableCellMessageTypeWarning
+      - SummaryTableCellMessageTypeError
+    conxai_com_docs-api_structures_api.WorkflowProcessingStatus:
+      type: string
+      enum:
+      - idle
+      - processing
+      - completed
+      x-enum-varnames:
+      - WorkflowProcessingStatusIdle
+      - WorkflowProcessingStatusProcessing
+      - WorkflowProcessingStatusCompleted
+    conxai_com_docs-api_structures_api.SummaryTableRow:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

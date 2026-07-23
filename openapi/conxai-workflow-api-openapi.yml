@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations workflow API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: workflow
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/workflows/{workflowId}/workflow-context-document:
+    post:
+      security:
+      - BearerAuth: []
+      description: This endpoint provides a presigned URL for clients to upload a workflow context document (excel, csv, json) directly to an S3 bucket. In the follow-up PUT request to the presigned URL the file should be the raw binary body of the request. It is important to resend the Content-Type header as well as the Content-Disposition header including the original filename.
+      tags:
+      - workflow
+      summary: Upload a workflow context document
+      parameters:
+      - description: Unique id of the project.
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Unique id of the use case.
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Unique id of the workflow_handlers.
+        name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Content-Type of the document file. Must be application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/csv, application/csv, or application/json
+        name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+      - description: Content-Disposition of the document file. Must be attachment; filename=<filename>
+        name: Content-Disposition
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostWorkflowContextDocumentRequest'
+        description: Create workflow context document request body
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.WorkflowContextDocumentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/workflows/{workflowId}/workflow-context-document/{documentId}:
+    delete:
+      security:
+      - BearerAuth: []
+      description: Delete workflow context document by id
+      tags:
+      - workflow
+      summary: Delete workflow context document
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Workflow Id
+        name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Id
+        name: documentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/workflows/{workflowId}/workflow-context-documents:
+    get:
+      security:
+      - BearerAuth: []
+      description: Return existing workflow context documents with filename, created date and download link
+      tags:
+      - workflow
+      summary: List workflow context documents
+      parameters:
+      - description: Unique id of the project.
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Unique id of the use case.
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Unique id of the workflow_handlers.
+        name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.WorkflowContextDocumentListItem'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    conxai_com_docs-api_structures_api.WorkflowContextDocumentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+    conxai_com_docs-api_structures_api.WorkflowContextDocumentListItem:
+      type: object
+      properties:
+        created_at:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.PostWorkflowContextDocumentRequest:
+      type: object
+      properties:
+        file_name:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

@@ -1,0 +1,412 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations use-cases API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: use-cases
+paths:
+  /projects/{projectId}/use-cases:
+    put:
+      security:
+      - BearerAuth: []
+      description: Update use case
+      tags:
+      - use-cases
+      summary: Update use case
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/conxai_com_docs-api_structures_api.PostUseCaseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      security:
+      - BearerAuth: []
+      description: Post use cases
+      tags:
+      - use-cases
+      summary: Create Use Case
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/conxai_com_docs-api_structures_api.PostUseCaseRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}:
+    delete:
+      security:
+      - BearerAuth: []
+      description: Delete use-cases
+      tags:
+      - use-cases
+      summary: Delete Use Cases
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use case UUID
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: "Server\tfelt bad"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/clone:
+    post:
+      security:
+      - BearerAuth: []
+      description: Creates a new use case (same request as create) and then clones all data from target useCaseId
+      tags:
+      - use-cases
+      summary: Create Use Case by cloning existing one
+      parameters:
+      - description: Master Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Source Use Case UUID to clone from
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: 'If true, do not copy samples when cloning (default: false)'
+        name: ignoreSamples
+        in: query
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_use_cases_handlers.CloneUseCaseRequest'
+        description: Use case request body (name, description, optional clone_document_types UUIDs)
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{standardProjectId}/link:
+    put:
+      security:
+      - BearerAuth: []
+      description: Link use cases to projects
+      tags:
+      - use-cases
+      summary: Link use cases to projects
+      parameters:
+      - description: Standard project id
+        name: standardProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
+        description: Project and use case
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{standardProjectId}/use-cases:
+    get:
+      security:
+      - JwtKeyAuth: []
+      description: Get use case by standard project id
+      tags:
+      - use-cases
+      summary: Get use case by standard project id
+      parameters:
+      - description: Project UUID
+        name: standardProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OneUseCaseResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OneUseCaseResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /use-cases:
+    get:
+      security:
+      - JwtKeyAuth: []
+      description: Get available use cases
+      tags:
+      - use-cases
+      summary: Get available use cases
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OneUseCaseResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OneUseCaseResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+      type: object
+      properties:
+        master_id:
+          type: string
+        use_case_id:
+          type: string
+    conxai_com_docs-api_structures_api.PostUseCaseResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    conxai_com_docs-api_structures_api.OneUseCaseResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        created_by_email:
+          type: string
+        description:
+          type: string
+        document_types:
+          type: array
+          items:
+            type: string
+        export:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ExportType'
+        id:
+          type: string
+        linked_projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.LinkedProject'
+        name:
+          type: string
+        project_id:
+          type: string
+        summary_table_schema_version:
+          type: string
+        summary_table_workflow_schema_version:
+          type: string
+    api_use_cases_handlers.CloneUseCaseRequest:
+      type: object
+      properties:
+        clone_document_types:
+          description: 'Optional list of document type UUIDs to clone. If not empty, only these are cloned
+
+            and summary table/schema copying is skipped. Values must be UUIDs.'
+          type: array
+          items:
+            type: string
+          example:
+          - '["3abf974f-bbca-4a01-a5b2-639c646a6d10"'
+          - '"c1e0b4f3-2c39-4a31-8e0f-6b5e3f8dc9ff"]'
+        description:
+          description: Optional description for the cloned use case
+          type: string
+          example: This is a cloned use case
+        name:
+          description: Human-readable name for the new cloned use case
+          type: string
+          example: Selling cars NEW
+    conxai_com_docs-api_structures_api.LinkedProject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.ExportType:
+      type: object
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+      type: object
+      required:
+      - name
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+  requestBodies:
+    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseRequest'
+      description: Use case request body
+      required: true
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

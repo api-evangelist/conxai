@@ -1,0 +1,1470 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations samples API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: samples
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples:
+    get:
+      security:
+      - BearerAuth: []
+      description: Return list of the samples for current document type
+      tags:
+      - samples
+      summary: Get samples
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DocumentsWithProgress'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/bulk-delete:
+    post:
+      security:
+      - BearerAuth: []
+      description: 'Delete multiple samples by ID in parallel. Errors per sample are captured in the response but do not interrupt other deletions.
+
+        Example response: [{"a1b2c3d4-e5f6-7890-abcd-ef1234567890": {"status": "deleted"}}, {"b2c3d4e5-f6a7-8901-bcde-f12345678901": {"status": "error", "message": "failed to delete S3 files"}}]'
+      tags:
+      - samples
+      summary: Bulk delete samples
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BulkSampleRequest'
+        description: List of sample IDs to delete
+        required: true
+      responses:
+        '200':
+          description: Per-sample delete results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BulkDocumentOperationStatus'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}:
+    get:
+      security:
+      - BearerAuth: []
+      description: Receive an individual sample of the document, a single page of the document and marks the page as validated.
+      tags:
+      - samples
+      summary: Get sample
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Sample'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Sample'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      security:
+      - BearerAuth: []
+      description: Delete sample
+      tags:
+      - samples
+      summary: Delete Sample
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: "Server\tfelt bad"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/download:
+    get:
+      security:
+      - BearerAuth: []
+      description: Returns a presigned download link for the original sample or a generated PDF with markups/bounding boxes for master projects_handlers.
+      tags:
+      - samples
+      summary: Download sample (original or with markups)
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: If true, includes markups in the generated PDF. Default is false.
+        name: markup
+        in: query
+        schema:
+          type: boolean
+      - description: If true, includes bounding boxes in the generated PDF. Default is false.
+        name: boundingbox
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DownloadLinkResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/download-link:
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - samples
+      summary: Get presigned download link for original sample (master project)
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DownloadLinkResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/download-original:
+    get:
+      security:
+      - BearerAuth: []
+      description: Returns a presigned download link for the original file stored in the originals folder on S3 for a master project sample.
+      tags:
+      - samples
+      summary: Download original sample by sample ID
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DownloadLinkResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/finish:
+    post:
+      security:
+      - BearerAuth: []
+      description: Finish document processing by validating all pages. This will copy result files to validated files.
+      tags:
+      - samples
+      summary: Finish document processing by validating all pages
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/markup-image/{pageIndex}:
+    put:
+      security:
+      - BearerAuth: []
+      description: Returns a presigned URL for uploading a markup image (PNG) for a specific page of a sample. The file will be overwritten if it already exists.
+      tags:
+      - samples
+      summary: Get presigned URL for uploading sample markup image
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Page Index
+        name: pageIndex
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_samples_handlers.MarkupImagePresignedURLResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/markup/{pageIndex}:
+    get:
+      security:
+      - BearerAuth: []
+      description: Retrieve markup data for a specific page of a sample
+      tags:
+      - samples
+      summary: Get markup data for a sample page
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Page Index
+        name: pageIndex
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      security:
+      - BearerAuth: []
+      description: Store markup data for a specific page of a sample
+      tags:
+      - samples
+      summary: Store markup data for a sample page
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Page Index
+        name: pageIndex
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Request'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_api_shared_handlers.StatusOkStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/page-dimensions:
+    get:
+      security:
+      - BearerAuth: []
+      description: Receive page dimensions for a sample with optional pagination.
+      tags:
+      - samples
+      summary: Get sample page dimensions
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset
+        name: offset
+        in: query
+        schema:
+          type: integer
+      - description: Pagination limit (0 or omitted returns all pages)
+        name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.GetPageDimensionsResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.GetPageDimensionsResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/pages:
+    get:
+      security:
+      - BearerAuth: []
+      description: Receive a list of sample pages with proper status and prediction structure.
+      tags:
+      - samples
+      summary: Get sample pages
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset
+        name: offset
+        in: query
+        schema:
+          type: integer
+      - description: Pagination limit
+        name: limit
+        in: query
+        schema:
+          type: integer
+      - description: Set false to turn off predictions
+        name: predictions
+        in: query
+        schema:
+          type: boolean
+      - description: Set false to turn off pages
+        name: pages
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.GetDocumentPagesResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.GetDocumentPagesResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/pages/{pageNum}:
+    put:
+      security:
+      - BearerAuth: []
+      description: Update validated sample by page
+      tags:
+      - samples
+      summary: Update validated sample by page
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Page Num
+        name: pageNum
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Finalize all pages, will create empty validated files
+        name: finalize
+        in: query
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_api_shared_handlers.StatusOkStruct'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/pages/{pageNum}/draft:
+    put:
+      security:
+      - BearerAuth: []
+      description: Update draft sample by page
+      tags:
+      - samples
+      summary: Update draft sample by page
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Page Num
+        name: pageNum
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
+        description: Draft sample request body
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_api_shared_handlers.StatusOkStruct'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/pdf-with-markups:
+    get:
+      security:
+      - BearerAuth: []
+      description: Generate a PDF document with embedded markups from all pages and return a presigned download link
+      tags:
+      - samples
+      summary: Generate and download PDF with markups for sample
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: If true, includes bounding boxes in the generated PDF. Default is false.
+        name: bbox
+        in: query
+        schema:
+          type: boolean
+      - description: If false, skips markup annotations_handlers. Default is true.
+        name: markup
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DownloadLinkResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/process:
+    post:
+      security:
+      - BearerAuth: []
+      description: Initiate processing on demand and receive result data
+      tags:
+      - samples
+      summary: On demand processing
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Remove all result and validated files
+        name: reset
+        in: query
+        schema:
+          type: boolean
+      - description: Wait for processing to finish
+        name: wait
+        in: query
+        required: true
+        schema:
+          type: boolean
+      requestBody:
+        $ref: '#/components/requestBodies/conxai_com_docs-api_structures_api.OnDemandProcessingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OnDemandResult'
+        '202':
+          description: Still processing, poll the status endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '422':
+          description: Document could not be processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/status:
+    get:
+      security:
+      - BearerAuth: []
+      description: Retrieves the status of a specific sample by ID for a specific document type within a use case. Returns sample metadata including page status, document type information, and processing status. This endpoint is used for master projects to fetch individual sample information.
+      tags:
+      - samples
+      summary: Get sample status by ID for master project
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case Id
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Document Type Id
+        name: documentTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Sample Id
+        name: sampleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved sample status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Documents'
+        '404':
+          description: Sample, project, use case, or document type not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    conxai_com_docs-api_structures_api.Sample:
+      type: object
+      properties:
+        content:
+          type: string
+        id:
+          type: string
+        image:
+          type: string
+        image_high:
+          type: string
+        image_low:
+          type: string
+        ocr:
+          type: string
+        predictions: {}
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            version:
+              type: string
+        status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.PageData:
+      type: object
+      properties:
+        content:
+          type: string
+        image:
+          type: string
+        image_high:
+          type: string
+        image_low:
+          type: string
+        ocr:
+          type: string
+        page_index:
+          type: integer
+        rotation:
+          type: integer
+        status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.BBox:
+      type: object
+      properties:
+        coordinates:
+          type: array
+          items:
+            type: number
+        id:
+          type: string
+    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
+      type: object
+      properties:
+        document_type:
+          type: string
+        pages:
+          type: array
+          items:
+            type: integer
+    conxai_com_docs-api_structures_api.BulkDocumentOperationStatus:
+      type: object
+      properties:
+        message:
+          type: string
+          example: failed to delete S3 files
+        status:
+          type: string
+          example: deleted
+    conxai_com_docs-api_structures_api.PredictionsStructure:
+      type: object
+      properties:
+        document_type:
+          type: string
+        use_case:
+          type: string
+        version:
+          type: integer
+    conxai_com_docs-api_structures_api.GetDocumentPagesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        page_count:
+          type: integer
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageData'
+        predictions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PagePredictions'
+        status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.DocumentsWithProgress:
+      type: object
+      properties:
+        created_at:
+          type: string
+          example: '2025-08-11T08:45:58Z'
+        created_by:
+          type: string
+          example: ''
+        document_type:
+          type: string
+          example: 28ab4fe4-ceaf-49b0-bbfd-315bbf4fa0ff
+        document_type_version:
+          type: integer
+          example: 1
+        edited_at:
+          type: string
+          example: '2025-08-11T08:45:58Z'
+        edited_by:
+          type: string
+          example: user@example.com
+        id:
+          type: string
+          example: fc5abcf4-bf5e-49a8-a5fc-49b41a59755b
+        is_training_version_synced:
+          type: boolean
+          example: true
+        name:
+          type: string
+          example: sell_car_invoice000.pdf
+        num_pages:
+          type: integer
+          example: 2
+        original_filename:
+          type: string
+          example: sell_car_invoice000.pdf
+        original_id:
+          type: string
+          example: fc5abcf4-bf5e-49a8-a5fc-49b41a59755b
+        original_order:
+          type: integer
+          example: 0
+        processing_status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ProcessingStatus'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+          example: validated
+        validation_status:
+          type: integer
+          example: 0
+    conxai_com_docs-api_structures_api.DownloadLinkResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        original_url:
+          type: string
+        pdf_url:
+          type: string
+    conxai_com_docs-api_structures_api.BBoxesByPage:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBox'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.PageDimension:
+      type: object
+      properties:
+        height:
+          type: integer
+        width:
+          type: integer
+    conxai_com_docs-api_structures_api.ProcessingStatus:
+      type: object
+      properties:
+        completion_percentage:
+          description: extractor_pages / page_count
+          type: number
+          example: 0.8
+        extractor_pages:
+          description: max is number of pages
+          type: integer
+          example: 1
+        preprocessing_completion_percentage:
+          description: (splitter + prerunner) / (2*page_count)
+          type: number
+          example: 0.6
+        prerunner_pages:
+          description: max is number of pages
+          type: integer
+          example: 8
+        splitter_pages:
+          description: max is number of pages
+          type: integer
+          example: 4
+    conxai_com_docs-api_structures_api.GetPageDimensionsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        page_count:
+          type: integer
+        page_dimensions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimensions'
+    conxai_com_docs-api_structures_api.Documents:
+      type: object
+      properties:
+        created_at:
+          type: string
+          example: '2025-08-11T08:45:58Z'
+        created_by:
+          type: string
+          example: ''
+        document_type:
+          type: string
+          example: 28ab4fe4-ceaf-49b0-bbfd-315bbf4fa0ff
+        document_type_version:
+          type: integer
+          example: 1
+        id:
+          type: string
+          example: fc5abcf4-bf5e-49a8-a5fc-49b41a59755b
+        is_training_version_synced:
+          description: 'IsTrainingVersionSynced indicates the training sync status:
+
+            - nil: samples not copied to training at all
+
+            - true: samples synced and up to date with latest version
+
+            - false: samples synced but not the latest version'
+          type: boolean
+          example: true
+        name:
+          type: string
+          example: sell_car_invoice000.pdf
+        num_pages:
+          type: integer
+          example: 2
+        original_id:
+          type: string
+          example: fc5abcf4-bf5e-49a8-a5fc-49b41a59755b
+        pages_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DocumentsPageStatus'
+        processing_status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ProcessingStatus'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+          example: validated
+        validation_status:
+          type: integer
+          example: 0
+    conxai_com_docs-api_structures_api.PagePredictions:
+      type: object
+      properties:
+        bboxes:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxesByPage'
+        data:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
+    conxai_com_docs-api_structures_api.DocumentsPageStatus:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+        status:
+          allOf:
+          - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+          example: validated
+    conxai_com_docs-api_structures_api.BulkSampleRequest:
+      type: object
+      properties:
+        sample_ids:
+          type: array
+          items:
+            type: string
+          example:
+          - '["a1b2c3d4-e5f6-7890-abcd-ef1234567890"'
+          - '"b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
+    conxai_com_docs-api_structures_api.PageTableRow:
+      type: object
+      additionalProperties: {}
+    api_samples_handlers.MarkupImagePresignedURLResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        url:
+          type: string
+    conxai_com_docs-api_structures_api.BBoxData:
+      type: object
+      properties:
+        coordinates:
+          type: array
+          items:
+            type: number
+        id:
+          type: string
+    conxai_com_docs-api_structures_api.OnDemandResult:
+      type: object
+    conxai_com_docs-api_structures_sample.Status:
+      type: string
+      enum:
+      - processing
+      - ready
+      - validated
+      - error
+      x-enum-varnames:
+      - StatusProcessing
+      - StatusReady
+      - StatusValidated
+      - StatusError
+    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
+      type: object
+      properties:
+        bboxes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxData'
+        data:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
+    conxai_com_docs-api_api_shared_handlers.StatusOkStruct:
+      type: object
+      properties:
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.PageDimensions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimension'
+  requestBodies:
+    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OnDemandProcessingRequest'
+      description: On demand request body
+      required: true
+    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
+      description: Validated document request body
+      required: true
+    Request:
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+      description: Markup request body
+      required: true
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

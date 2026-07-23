@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations users API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: users
+paths:
+  /users/:projectId:
+    get:
+      security:
+      - ApiKeyAuth: []
+      description: Get users by project id
+      tags:
+      - users
+      summary: Get users by project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/platform.CognitoUser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /users/:projectId/userUuid:
+    delete:
+      security:
+      - ApiKeyAuth: []
+      description: Remove users from project by user id
+      tags:
+      - users
+      summary: Remove users from project
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /users/add-to-project:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: Add user to project by email and project id
+      tags:
+      - users
+      summary: Add user to project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAddToProjectRequest'
+        description: process userToProject request
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    platform.CognitoUser:
+      type: object
+      properties:
+        confirmed:
+          type: boolean
+        created_at:
+          type: string
+        email:
+          type: string
+        uuid:
+          type: string
+    UserAddToProjectRequest:
+      type: object
+      properties:
+        project_id:
+          description: Project id
+          type: string
+        user_email:
+          description: User email
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

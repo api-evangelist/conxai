@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations Images API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: Images
+paths:
+  /images:
+    post:
+      description: This endpoint returns a presigned URL for clients to upload an image directly to an S3 bucket. In the follow-up PUT request to the presigned URL, the file should be the raw binary body of the request. It is important to resend the same Content-Type header to this endpoint and to the presigned URL.
+      parameters:
+      - description: Content-Type of the image file. Must be image/png or image/jpeg
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clients.SuccessResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - X-Api-Key: []
+      summary: Upload an image
+      tags:
+      - Images
+  /images/{imageId}/solutions:
+    get:
+      description: This endpoint provides the AI response including the rle mask of the selected object and the firestop solution for the given image and point coordinates.
+      parameters:
+      - description: Unique id of the image.
+        in: path
+        name: imageId
+        required: true
+        schema:
+          type: string
+      - description: X coordinate of the point to infer.
+        in: query
+        name: x
+        required: true
+        schema:
+          type: integer
+      - description: Y coordinate of the point to infer.
+        in: query
+        name: y
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clients.SolutionResponse'
+        '204':
+          description: Not ready yet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - X-Api-Key: []
+      summary: Receive the solution for the given image and point coordinates
+      tags:
+      - Images
+    put:
+      description: This endpoint allows the user to validate a solution corresponding to a clicked point on the image by providing the final solution to the referenced image and point coordinates
+      parameters:
+      - description: Unique id of the image.
+        in: path
+        name: imageId
+        required: true
+        schema:
+          type: string
+      - description: X coordinate of the point to infer.
+        in: query
+        name: x
+        required: true
+        schema:
+          type: integer
+      - description: Y coordinate of the point to infer.
+        in: query
+        name: y
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/clients.Solution'
+        description: solution
+        required: true
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - X-Api-Key: []
+      summary: Validate a firestop solution
+      tags:
+      - Images
+components:
+  schemas:
+    ErrorResponse:
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+      type: object
+    clients.Solution:
+      properties:
+        fire_rating:
+          type: string
+        object_insulation:
+          type: string
+        object_material:
+          type: string
+        penetrating_object:
+          type: string
+        penetration_type:
+          type: string
+        supporting_material:
+          type: string
+        supporting_structure:
+          type: string
+      type: object
+    clients.SolutionResponse:
+      properties:
+        rle_mask:
+          $ref: '#/components/schemas/clients.RLEMask'
+        solution:
+          $ref: '#/components/schemas/clients.Solution'
+      type: object
+    clients.SuccessResponse:
+      properties:
+        image_id:
+          format: uuid
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+      type: object
+    clients.RLEMask:
+      properties:
+        count:
+          example: P\S25Zi0.....
+          type: string
+        size:
+          example:
+          - 640
+          - 480
+          items:
+            type: integer
+          type: array
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

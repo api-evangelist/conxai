@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations exports API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: exports
+paths:
+  /projects/{projectId}/use-cases/{useCaseId}/exports:
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - exports
+      summary: List exported files for a use case
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case UUID
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: 'Maximum number of items to return (default: 20)'
+        name: limit
+        in: query
+        schema:
+          type: integer
+      - description: 'Number of items to skip (default: 0)'
+        name: offset
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          headers:
+            All-items-count:
+              description: Total number of items
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ExportFile'
+  /projects/{projectId}/use-cases/{useCaseId}/exports/{exportId}:
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - exports
+      summary: Get presigned download link for exported file
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case UUID
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Export UUID
+        name: exportId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns presignedUrl
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: File not ready or found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+    delete:
+      security:
+      - BearerAuth: []
+      tags:
+      - exports
+      summary: Delete exported file
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Use Case UUID
+        name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Export UUID
+        name: exportId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+components:
+  schemas:
+    conxai_com_docs-api_structures_api.ExportFile:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        file_name:
+          type: string
+        id:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

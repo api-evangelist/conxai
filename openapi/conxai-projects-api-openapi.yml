@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations projects API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: projects
+paths:
+  /projects:
+    get:
+      security:
+      - BearerAuth: []
+      description: Get project list with proper type standard, master or all
+      tags:
+      - projects
+      summary: Get project list
+      parameters:
+      - description: Filter by type (standard, master) without param return all
+        name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ProjectWithUseCases'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fiber.Map'
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      security:
+      - BearerAuth: []
+      description: This endpoint creates a new project
+      tags:
+      - projects
+      summary: Create a new project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_projects_handlers.ProjectRequestBody'
+        description: New project request body
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: felt bad
+          content:
+            application/json:
+              schema:
+                type: string
+  /projects/{projectId}:
+    delete:
+      security:
+      - BearerAuth: []
+      description: Delete a standard project and all its data
+      tags:
+      - projects
+      summary: Delete standard project
+      parameters:
+      - description: Project UUID
+        name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request - Not a standard project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server felt bad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    conxai_com_docs-api_platform_s2s.ProjectLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
+          type: string
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
+    api_projects_handlers.Type:
+      type: string
+      enum:
+      - master
+      - standard
+      - test
+      x-enum-varnames:
+      - Master
+      - Standard
+      - Test
+    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+      type: object
+      properties:
+        master_id:
+          type: string
+        use_case_id:
+          type: string
+    conxai_com_docs-api_platform_s2s.ProjectResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        created_by_email:
+          type: string
+        external_id:
+          type: string
+        image_cover:
+          type: string
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
+        updated_at:
+          type: string
+        uuid:
+          type: string
+    conxai_com_docs-api_structures_api.ProjectWithUseCases:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        created_by_email:
+          type: string
+        external_id:
+          type: string
+        image_cover:
+          type: string
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
+        updated_at:
+          type: string
+        use_cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
+        uuid:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    api_projects_handlers.ProjectRequestBody:
+      type: object
+      properties:
+        location:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/api_projects_handlers.Type'
+    conxai_com_docs-api_platform_s2s.ProjectSettings:
+      type: object
+      properties:
+        end_date:
+          description: should be in RFC3339 format
+          type: string
+        location:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectLocation'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        start_date:
+          description: should be in RFC3339 format
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

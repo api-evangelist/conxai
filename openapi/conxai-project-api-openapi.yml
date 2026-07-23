@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
+  title: Customer annotations project API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Dmytro Kabachenko
+    email: dmytro.kabachenko@conxai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: //customer.conxai.ai
+tags:
+- name: project
+paths:
+  /project:
+    put:
+      security:
+      - ApiKeyAuth: []
+      description: Update project data
+      tags:
+      - project
+      summary: Update project data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+        description: process project request
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: Create new project
+      tags:
+      - project
+      summary: Create new project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transformers.ProjectRequest'
+        description: process project request
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /project/:projectId/features:
+    get:
+      description: Get project information
+      tags:
+      - project
+      summary: Get Features in project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectFeaturesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectFeaturesResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+  /project/:uuid:
+    get:
+      description: Get project information
+      tags:
+      - project
+      summary: Get project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      description: Delete project information
+      tags:
+      - project
+      summary: Delete project
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+  /project/features:
+    put:
+      security:
+      - ApiKeyAuth: []
+      description: Update project features data
+      tags:
+      - project
+      summary: Update project features data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeaturesRequest'
+        description: process project request
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects:
+    get:
+      description: Get projects
+      tags:
+      - project
+      summary: Get projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    transformers.ProjectLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
+          type: string
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    ProjectRequest:
+      type: object
+      properties:
+        image_cover:
+          description: Image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          $ref: '#/components/schemas/transformers.ProjectSettings'
+        uuid:
+          description: Uniq project id
+          type: string
+    transformers.Feature:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        key:
+          type: string
+    FeaturesRequest:
+      type: object
+      properties:
+        features:
+          description: New Features to update
+          type: array
+          items:
+            type: string
+        project_id:
+          description: Uniq project id
+          type: string
+    transformers.ProjectSettings:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/transformers.ProjectLocation'
+        start_date:
+          type: string
+    ProjectFeaturesResponse:
+      type: object
+      properties:
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformers.Feature'
+        id:
+          type: integer
+        project_id:
+          type: string
+    ProjectResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        external_id:
+          description: Project external id
+          type: string
+        image_cover:
+          description: Project image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          description: Project settings
+          allOf:
+          - $ref: '#/components/schemas/transformers.ProjectSettings'
+        uuid:
+          description: Uniq project id
+          type: string
+    transformers.ProjectRequest:
+      type: object
+      properties:
+        external_id:
+          description: Project external id
+          type: string
+        image_cover:
+          description: Project image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          description: Project settings
+          allOf:
+          - $ref: '#/components/schemas/transformers.ProjectSettings'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Provide the given API key
+      type: apiKey
+      name: X-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
