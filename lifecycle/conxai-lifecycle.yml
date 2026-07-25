@@ -1,0 +1,18 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ info.version + https://conxai.readme.io/
+versioning:
+  scheme: none-in-path
+  note: >-
+    APIs are unversioned in the URL path; each OpenAPI declares info.version 1.0/1.0.0.
+    No public deprecation policy, Sunset/Deprecation header support, SLA or status page
+    was found at the time of enrichment.
+  spec_versions:
+    - {api: Customer API, version: '1.0'}
+    - {api: Conxai Docnostic API, version: '1.0'}
+    - {api: Conxai Firestop API, version: '1.0'}
+    - {api: Production Tracking, version: '1.0.0'}
+deprecation: {policy_url: null, sunset_header: false}
+sla: {url: null}
+status_page: null
+deprecated_operations: []

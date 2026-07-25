@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: searched
+note: >-
+  Probed the /.well-known/ discovery surface on every Conxai host. No real discovery
+  documents were served: API hosts returned 401/403 (auth-gated) or 404, the marketing
+  site returned 404, and lens.conxai.ai returned HTTP 200 for several paths but with a
+  text/html single-page-app fallback (not genuine well-known documents). No files saved.
+hosts:
+  - host: https://customer.conxai.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+      - {path: /.well-known/openid-configuration, status: 403}
+      - {path: /.well-known/oauth-authorization-server, status: 403}
+      - {path: /.well-known/api-catalog, status: 403}
+  - host: https://docs.ui.conxai.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 401}
+      - {path: /.well-known/openid-configuration, status: 401}
+  - host: https://firestop.conxai.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+  - host: https://pt.conxai.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+  - host: https://www.conxai.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+  - host: https://lens.conxai.ai
+    documents:
+      - {path: /.well-known/openid-configuration, status: 200, note: text/html SPA fallback, not a real document}
+      - {path: /.well-known/oauth-authorization-server, status: 200, note: text/html SPA fallback, not a real document}
+      - {path: /.well-known/api-catalog, status: 200, note: text/html SPA fallback, not a real document}

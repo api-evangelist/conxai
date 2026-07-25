@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Conxai Conxai Docnostic API
+  version: 1.0.0
+extends: openapi/conxai-docnostic-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: conxai
+      x-apievangelist-enriched: '2026-07-18'
+      x-apievangelist-auth: X-Api-Key header (server-to-server)
+  - target: $.info
+    update:
+      x-apievangelist-docs: https://conxai.readme.io/

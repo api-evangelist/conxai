@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ + https://conxai.readme.io/reference/sitelens-integration-steps
+authentication:
+  style: api-key-header
+  header: X-Api-Key
+  note: >-
+    Server-to-server API key issued by Conxai support. The Docnostic API additionally
+    accepts a JWT bearer token in the Authorization header.
+  ref: authentication/conxai-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or parameter is documented in the specs.
+pagination:
+  style: offset-limit
+  params: [offset, limit]
+  scope: Docnostic list endpoints (documents, samples, pages)
+error_envelope:
+  shape: {error: string, status: string}
+  schema: ErrorResponse
+  ref: errors/conxai-problem-types.yml
+uploads:
+  style: presigned-s3
+  note: >-
+    Image and document uploads use a two-step presigned-URL flow: POST to the API to
+    receive a presigned S3 URL, then PUT the raw binary body to that URL, resending the
+    same Content-Type (and Content-Disposition for documents).
+rate_limiting: {signaled: false, note: No rate-limit headers documented.}
+versioning: {ref: lifecycle/conxai-lifecycle.yml}

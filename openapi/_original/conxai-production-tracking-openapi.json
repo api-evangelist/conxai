@@ -1,0 +1,168 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Production Tracking",
+    "description": "This collection contains all the endpoints to the Production Tracking tab for Sitelens",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://pt.conxai.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/weather": {
+      "get": {
+        "tags": [
+          "production_tracking"
+        ],
+        "summary": "Weather",
+        "description": "This endpoint retrieves weather data for a given latitude and longitude. It uses the OpenMeteo API to fetch the weather forecast",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{lat}}"
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{long}}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/{project_ID}/postprocess": {
+      "get": {
+        "tags": [
+          "production_tracking"
+        ],
+        "summary": "Postprocess",
+        "description": "This endpoint handles the postprocessing of production tracking data for a given project. It generates two basic graphs (ring_count and phase_count) based on the project type.",
+        "parameters": [
+          {
+            "name": "project_ID",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/{project_ID}/logs": {
+      "get": {
+        "tags": [
+          "production_tracking"
+        ],
+        "summary": "Logs",
+        "description": "This endpoint retrieves the logs for a given project.",
+        "parameters": [
+          {
+            "name": "project_ID",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/{project_ID}//graphs": {
+      "post": {
+        "tags": [
+          "production_tracking"
+        ],
+        "summary": "Graphs",
+        "description": "This endpoint generates graphs based on the provided filters and configurations for a given project. It creates various graphs such as ring count, phase count, ring duration, and phase duration.",
+        "requestBody": {
+          "content": {}
+        },
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{start}}"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{end}}"
+          },
+          {
+            "name": "project_ID",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

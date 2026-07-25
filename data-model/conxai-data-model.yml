@@ -1,0 +1,55 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/conxai-customer-openapi.json, openapi/conxai-docnostic-openapi.json, openapi/conxai-firestop-openapi.json
+note: >-
+  Entity-relationship graph derived from the URL path hierarchy and schemas of the
+  Conxai Customer (SiteLens) and Docnostic APIs. Ids are UUIDs; external ids are
+  caller-supplied.
+entities:
+  - name: Company
+    api: customer
+  - name: Project
+    api: customer, docnostic
+    id_fields: [uuid, external_id, projectId]
+  - name: Camera
+    api: customer
+    id_fields: [uuid, cameraExternalId]
+  - name: User
+    api: customer
+    id_fields: [userUuid]
+  - name: Image
+    api: customer, firestop
+    id_fields: [imageId]
+  - name: UseCase
+    api: docnostic
+    id_fields: [useCaseId]
+  - name: DocumentType
+    api: docnostic
+    id_fields: [documentTypeId]
+  - name: Sample
+    api: docnostic
+    id_fields: [sampleId]
+  - name: Document
+    api: docnostic
+    id_fields: [documentId, originalDocumentId]
+  - name: Page
+    api: docnostic
+    id_fields: [pageNum, pageIndex]
+  - name: Export
+    api: docnostic
+    id_fields: [exportId]
+  - name: Workflow
+    api: docnostic
+    id_fields: [workflowId]
+relationships:
+  - {from: Project, to: Camera, kind: has_many, via: projectId}
+  - {from: Project, to: User, kind: has_many, via: projectId}
+  - {from: Project, to: UseCase, kind: has_many, via: projectId}
+  - {from: UseCase, to: DocumentType, kind: has_many, via: useCaseId}
+  - {from: UseCase, to: Document, kind: has_many, via: useCaseId}
+  - {from: DocumentType, to: Sample, kind: has_many, via: documentTypeId}
+  - {from: Document, to: Page, kind: has_many, via: documentId}
+  - {from: Sample, to: Page, kind: has_many, via: sampleId}
+  - {from: UseCase, to: Export, kind: has_many, via: useCaseId}
+  - {from: UseCase, to: Workflow, kind: has_many, via: useCaseId}
+  - {from: Camera, to: Image, kind: has_many, via: cameraExternalId}

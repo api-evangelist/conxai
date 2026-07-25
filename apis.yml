@@ -1,8 +1,34 @@
 aid: conxai
 name: Conxai
-description: Conxai is a company surfaced as a portfolio company of earlybird and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Conxai (CONXAI Technologies GmbH) is a Munich, Germany-based startup building a
+  no-code, agentic AI platform purpose-built for the construction and AEC
+  (architecture, engineering, construction) industry. The modular platform
+  contextualizes fragmented project-lifecycle data — site photos and video,
+  documents, CAD drawings and tender submissions — and turns it into actionable
+  knowledge across three areas: transparency, automation, and knowledge
+  management. Marquee products include SiteLens (real-time construction-site
+  camera analysis, progress tracking and firestop detection) and DocNostic
+  (document extraction, classification and workflow automation). Conxai exposes
+  several REST APIs — a Customer/SiteLens API, a Docnostic document API, a
+  Firestop API and a Production Tracking API — documented on ReadMe and secured
+  with an X-Api-Key header (Docnostic also accepts a JWT bearer token). The
+  company is backed by Earlybird, Pi Labs, Cemex Ventures, Zacua Ventures,
+  Capricorn Partners and BayBG Venture Capital.
 url: https://raw.githubusercontent.com/api-evangelist/conxai/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/6768048a3496e563be715576/676ffd7357fd1eda32f52ca3_OG.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,12 +37,415 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-apis: []
+- Construction
+- AEC
+- Artificial Intelligence
+- Document Processing
+- Computer Vision
+- Agentic AI
+- Machine Learning
+apis:
+- aid: conxai:conxai-annotations-api
+  name: Conxai annotations API
+  description: The annotations API from Conxai — 1 operation(s) for annotations.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - annotations
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-annotations-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-camera-api
+  name: Conxai camera API
+  description: The camera API from Conxai — 4 operation(s) for camera.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - camera
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-camera-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-document-types-api
+  name: Conxai document-types API
+  description: The document-types API from Conxai — 4 operation(s) for document-types.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - document-types
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-document-types-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-documents-api
+  name: Conxai documents API
+  description: The documents API from Conxai — 26 operation(s) for documents.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - documents
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-documents-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-exports-api
+  name: Conxai exports API
+  description: The exports API from Conxai — 2 operation(s) for exports.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - exports
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-exports-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-images-api
+  name: Conxai Images API
+  description: The Images API from Conxai — 2 operation(s) for images.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-images-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-integrations-api
+  name: Conxai integrations API
+  description: The integrations API from Conxai — 5 operation(s) for integrations.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-production-tracking-api
+  name: Conxai production_tracking API
+  description: The production_tracking API from Conxai — 4 operation(s) for production_tracking.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - production_tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-production-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-project-api
+  name: Conxai project API
+  description: The project API from Conxai — 5 operation(s) for project.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - project
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-project-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-projects-api
+  name: Conxai projects API
+  description: The projects API from Conxai — 2 operation(s) for projects.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - projects
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-projects-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-samples-api
+  name: Conxai samples API
+  description: The samples API from Conxai — 16 operation(s) for samples.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - samples
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-samples-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-schema-api
+  name: Conxai schema API
+  description: The schema API from Conxai — 1 operation(s) for schema.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - schema
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-schema-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-summary-table-api
+  name: Conxai summary-table API
+  description: The summary-table API from Conxai — 12 operation(s) for summary-table.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - summary-table
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-summary-table-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-use-cases-api
+  name: Conxai use-cases API
+  description: The use-cases API from Conxai — 6 operation(s) for use-cases.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - use-cases
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-use-cases-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-users-api
+  name: Conxai users API
+  description: The users API from Conxai — 3 operation(s) for users.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-users-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-workflow-api
+  name: Conxai workflow API
+  description: The workflow API from Conxai — 3 operation(s) for workflow.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - workflow
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-workflow-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
+- aid: conxai:conxai-workflow-table-api
+  name: Conxai workflow-table API
+  description: The workflow-table API from Conxai — 3 operation(s) for workflow-table.
+  humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
+  baseURL: https://customer.conxai.ai
+  tags:
+  - workflow-table
+  properties:
+  - type: OpenAPI
+    url: openapi/conxai-workflow-table-api-openapi.yml
+  - type: Documentation
+    url: https://conxai.readme.io/reference/sitelens-integration-steps
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_project
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_projects
+  - type: APIReference
+    url: https://conxai.readme.io/reference/post_images
+  - type: APIReference
+    url: https://conxai.readme.io/reference/get_weather-1
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: AgenticAccess
+  url: agentic-access/conxai-agentic-access.yml
+- type: DomainSecurity
+  url: security/conxai-domain-security.yml
+- type: Authentication
+  url: authentication/conxai-authentication.yml
+- type: DeveloperPortal
+  url: https://conxai.readme.io/
+- type: Documentation
+  url: https://conxai.readme.io/reference/sitelens-integration-steps
+- type: APIReference
+  url: https://conxai.readme.io/reference
+- type: GettingStarted
+  url: https://conxai.readme.io/reference/sitelens-integration-steps
+- type: Website
+  url: https://www.conxai.com/
+- type: Blog
+  url: https://www.conxai.com/company/news
+- type: Support
+  url: https://www.conxai.com/company/contact-us
+- type: SignUp
+  url: https://lens.conxai.ai/
+- type: Login
+  url: https://lens.conxai.ai/
+- type: TermsOfService
+  url: https://www.conxai.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.conxai.com/privacy-policy
+- type: TrustCenter
+  url: https://conxai.eu.trust.site/
+- type: Compliance
+  url: https://conxai.eu.trust.site/
+- type: LLMsTxt
+  url: llms/conxai-llms.txt
+- type: Conventions
+  url: conventions/conxai-conventions.yml
+- type: ErrorCatalog
+  url: errors/conxai-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/conxai-lifecycle.yml
+- type: DataModel
+  url: data-model/conxai-data-model.yml
+- type: MCPServer
+  url: mcp/conxai-mcp.yml
+- type: Conformance
+  url: conformance/conxai-conformance.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/conxai
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

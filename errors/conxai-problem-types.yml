@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/ (4xx/5xx responses across all Conxai specs)
+format: custom-envelope
+envelope:
+  description: >-
+    Conxai error responses return a JSON object with an `error` string and, on some
+    endpoints, a `status` string (schema ErrorResponse). Not RFC 9457 problem+json.
+  fields: [error, status]
+problems:
+  - status: 400
+    title: "Bad Request"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-customer-openapi.json, openapi/conxai-docnostic-openapi.json, openapi/conxai-firestop-openapi.json]
+  - status: 401
+    title: "Unauthorized"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-docnostic-openapi.json]
+  - status: 404
+    title: "Not Found"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-customer-openapi.json, openapi/conxai-docnostic-openapi.json, openapi/conxai-firestop-openapi.json]
+  - status: 422
+    title: "Unprocessable Entity"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-docnostic-openapi.json]
+  - status: 500
+    title: "Internal Server Error"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-customer-openapi.json, openapi/conxai-docnostic-openapi.json]
+  - status: 502
+    title: "Bad Gateway"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-docnostic-openapi.json]
+  - status: 504
+    title: "Gateway Timeout"
+    envelope_schema: ErrorResponse
+    sources: [openapi/conxai-docnostic-openapi.json]

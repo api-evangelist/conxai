@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/ (operations grounded in real method+path; the specs declare no operationIds)
+skills:
+  - file: conxai-sitelens-onboard-project.md
+    name: Onboard a SiteLens project with cameras and users
+    api: openapi/conxai-customer-openapi.json
+    operations:
+      - POST /project
+      - POST /camera
+      - POST /users/add-to-project
+      - GET /projects/:projectId/cameras
+  - file: conxai-firestop-detect.md
+    name: Run firestop detection on a site image
+    api: openapi/conxai-firestop-openapi.json
+    operations:
+      - POST /images
+      - GET /images/{imageId}/solutions
+      - PUT /images/{imageId}/solutions
+  - file: conxai-docnostic-extract-document.md
+    name: Extract data from a document with DocNostic
+    api: openapi/conxai-docnostic-openapi.json
+    operations:
+      - GET /use-cases
+      - POST /projects/{projectId}/use-cases/{useCaseId}/documents
+      - POST /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/process
+      - GET /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/status
+      - GET /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/download
