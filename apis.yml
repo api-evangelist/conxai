@@ -394,6 +394,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/conxai-customer-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/conxai-agentic-access.yml
 - type: DomainSecurity
