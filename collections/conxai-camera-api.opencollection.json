@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations camera API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "camera",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create new camera",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/camera",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Api-Key",
+              "value": "{{X-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create new camera"
+        },
+        {
+          "info": {
+            "name": "Get camera info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/camera-info/:cameraExternalId"
+          },
+          "docs": "Get camera info"
+        },
+        {
+          "info": {
+            "name": "Get camera",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/camera/:uuid"
+          },
+          "docs": "Get camera"
+        },
+        {
+          "info": {
+            "name": "Delete camera",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/camera/:uuid"
+          },
+          "docs": "Delete camera"
+        },
+        {
+          "info": {
+            "name": "Get cameras by project id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/cameras"
+          },
+          "docs": "Get cameras by project id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

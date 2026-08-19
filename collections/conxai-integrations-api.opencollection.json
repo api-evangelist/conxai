@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations integrations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange Box authorization code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/integrations/box/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange a Box.com OAuth2 authorization code for an access token"
+        },
+        {
+          "info": {
+            "name": "Refresh Box access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/integrations/box/refresh"
+          },
+          "docs": "Use the stored refresh token to obtain a new Box.com access token"
+        },
+        {
+          "info": {
+            "name": "Revoke Box integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/integrations/box/revoke"
+          },
+          "docs": "Revokes the stored Box.com access token with Box and removes it from cache. Idempotent – returns 200 even when no token exists."
+        },
+        {
+          "info": {
+            "name": "Get Box connection status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/integrations/box/token"
+          },
+          "docs": "Returns isConnected: true with the access token when a cached token exists, isConnected: false otherwise"
+        },
+        {
+          "info": {
+            "name": "Generate Zendesk JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/integrations/zendesk/jwt"
+          },
+          "docs": "Creates a signed JWT for Zendesk Messaging on behalf of the authenticated user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

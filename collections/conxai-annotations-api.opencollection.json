@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "annotations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete annotations",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/annotations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              }
+            ]
+          },
+          "docs": "Delete annotations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

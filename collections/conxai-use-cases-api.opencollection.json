@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations use-cases API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "use-cases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Use Case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Post use cases"
+        },
+        {
+          "info": {
+            "name": "Update use case",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update use case"
+        },
+        {
+          "info": {
+            "name": "Delete Use Cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use case UUID"
+              }
+            ]
+          },
+          "docs": "Delete use-cases"
+        },
+        {
+          "info": {
+            "name": "Create Use Case by cloning existing one",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/clone",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Master Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Source Use Case UUID to clone from"
+              },
+              {
+                "name": "ignoreSamples",
+                "value": "",
+                "type": "query",
+                "description": "If true, do not copy samples when cloning (default: false)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new use case (same request as create) and then clones all data from target useCaseId"
+        },
+        {
+          "info": {
+            "name": "Link use cases to projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:standardProjectId/link",
+            "params": [
+              {
+                "name": "standardProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Standard project id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link use cases to projects"
+        },
+        {
+          "info": {
+            "name": "Get use case by standard project id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:standardProjectId/use-cases",
+            "params": [
+              {
+                "name": "standardProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ]
+          },
+          "docs": "Get use case by standard project id"
+        },
+        {
+          "info": {
+            "name": "Get available use cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/use-cases"
+          },
+          "docs": "Get available use cases"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

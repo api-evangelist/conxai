@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations schema API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "schema",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/schemas/:schema/version/:version",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "path",
+                "description": "Schema UUID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Schema version"
+              }
+            ]
+          },
+          "docs": "Get Schema by version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

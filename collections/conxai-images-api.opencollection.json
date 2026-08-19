@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations Images API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/images",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint returns a presigned URL for clients to upload an image directly to an S3 bucket. In the follow-up PUT request to the presigned URL, the file should be the raw binary body of the request. It is important to resend the same Content-Type header to this endpoint and to the presigned URL."
+        },
+        {
+          "info": {
+            "name": "Receive the solution for the given image and point coordinates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/images/:imageId/solutions",
+            "params": [
+              {
+                "name": "imageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the image."
+              },
+              {
+                "name": "x",
+                "value": "",
+                "type": "query",
+                "description": "X coordinate of the point to infer."
+              },
+              {
+                "name": "y",
+                "value": "",
+                "type": "query",
+                "description": "Y coordinate of the point to infer."
+              }
+            ]
+          },
+          "docs": "This endpoint provides the AI response including the rle mask of the selected object and the firestop solution for the given image and point coordinates."
+        },
+        {
+          "info": {
+            "name": "Validate a firestop solution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/images/:imageId/solutions",
+            "params": [
+              {
+                "name": "imageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the image."
+              },
+              {
+                "name": "x",
+                "value": "",
+                "type": "query",
+                "description": "X coordinate of the point to infer."
+              },
+              {
+                "name": "y",
+                "value": "",
+                "type": "query",
+                "description": "Y coordinate of the point to infer."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint allows the user to validate a solution corresponding to a clicked point on the image by providing the final solution to the referenced image and point coordinates"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -6,63 +6,69 @@ server:
   name: conxai
   transport: http
 tools:
-  - name: create_project
-    description: Create a new SiteLens project
-    source_operation: openapi/conxai-customer-openapi.json#POST /project
-  - name: list_projects
-    description: List projects
-    source_operation: openapi/conxai-customer-openapi.json#GET /projects
-  - name: get_project
-    description: Get a project by id
-    source_operation: openapi/conxai-customer-openapi.json#GET /project/:uuid
-  - name: update_project
-    description: Update project data
-    source_operation: openapi/conxai-customer-openapi.json#PUT /project
-  - name: delete_project
-    description: Delete a project
-    source_operation: openapi/conxai-customer-openapi.json#DELETE /project/:uuid
-  - name: create_camera
-    description: Create a new camera
-    source_operation: openapi/conxai-customer-openapi.json#POST /camera
-  - name: get_camera
-    description: Get a camera by id
-    source_operation: openapi/conxai-customer-openapi.json#GET /camera/:uuid
-  - name: list_project_cameras
-    description: List cameras for a project
-    source_operation: openapi/conxai-customer-openapi.json#GET /projects/:projectId/cameras
-  - name: add_user_to_project
-    description: Add a user to a project by email
-    source_operation: openapi/conxai-customer-openapi.json#POST /users/add-to-project
-  - name: list_project_users
-    description: List users on a project
-    source_operation: openapi/conxai-customer-openapi.json#GET /users/:projectId
-  - name: upload_image
-    description: Get a presigned URL to upload an image
-    source_operation: openapi/conxai-firestop-openapi.json#POST /images
-  - name: get_image_solution
-    description: Get the AI firestop solution for a point on an image
-    source_operation: openapi/conxai-firestop-openapi.json#GET /images/{imageId}/solutions
-  - name: validate_image_solution
-    description: Validate a firestop solution
-    source_operation: openapi/conxai-firestop-openapi.json#PUT /images/{imageId}/solutions
-  - name: create_document_project
-    description: Create a Docnostic project
-    source_operation: openapi/conxai-docnostic-openapi.json#POST /projects
-  - name: list_document_projects
-    description: List Docnostic projects
-    source_operation: openapi/conxai-docnostic-openapi.json#GET /projects
-  - name: list_use_cases
-    description: Get available use cases
-    source_operation: openapi/conxai-docnostic-openapi.json#GET /use-cases
-  - name: upload_document
-    description: Get a presigned URL to upload a document
-    source_operation: openapi/conxai-docnostic-openapi.json#POST /projects/{projectId}/use-cases/{useCaseId}/documents
-  - name: process_document
-    description: Run on-demand document processing
-    source_operation: openapi/conxai-docnostic-openapi.json#POST /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/process
-  - name: get_document_status
-    description: Get document processing status
-    source_operation: openapi/conxai-docnostic-openapi.json#GET /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/status
-  - name: get_weather
-    description: Retrieve weather data for a lat/lon via OpenMeteo
-    source_operation: openapi/conxai-production-tracking-openapi.json#GET /weather
+- name: create_project
+  description: Create a new SiteLens project
+  source_operation: openapi/conxai-customer-openapi.json#POST /project
+- name: list_projects
+  description: List projects
+  source_operation: openapi/conxai-customer-openapi.json#GET /projects
+- name: get_project
+  description: Get a project by id
+  source_operation: openapi/conxai-customer-openapi.json#GET /project/:uuid
+- name: update_project
+  description: Update project data
+  source_operation: openapi/conxai-customer-openapi.json#PUT /project
+- name: delete_project
+  description: Delete a project
+  source_operation: openapi/conxai-customer-openapi.json#DELETE /project/:uuid
+- name: create_camera
+  description: Create a new camera
+  source_operation: openapi/conxai-customer-openapi.json#POST /camera
+- name: get_camera
+  description: Get a camera by id
+  source_operation: openapi/conxai-customer-openapi.json#GET /camera/:uuid
+- name: list_project_cameras
+  description: List cameras for a project
+  source_operation: openapi/conxai-customer-openapi.json#GET /projects/:projectId/cameras
+- name: add_user_to_project
+  description: Add a user to a project by email
+  source_operation: openapi/conxai-customer-openapi.json#POST /users/add-to-project
+- name: list_project_users
+  description: List users on a project
+  source_operation: openapi/conxai-customer-openapi.json#GET /users/:projectId
+- name: upload_image
+  description: Get a presigned URL to upload an image
+  source_operation: openapi/conxai-firestop-openapi.json#POST /images
+- name: get_image_solution
+  description: Get the AI firestop solution for a point on an image
+  source_operation: openapi/conxai-firestop-openapi.json#GET /images/{imageId}/solutions
+- name: validate_image_solution
+  description: Validate a firestop solution
+  source_operation: openapi/conxai-firestop-openapi.json#PUT /images/{imageId}/solutions
+- name: create_document_project
+  description: Create a Docnostic project
+  source_operation: openapi/conxai-docnostic-openapi.json#POST /projects
+- name: list_document_projects
+  description: List Docnostic projects
+  source_operation: openapi/conxai-docnostic-openapi.json#GET /projects
+- name: list_use_cases
+  description: Get available use cases
+  source_operation: openapi/conxai-docnostic-openapi.json#GET /use-cases
+- name: upload_document
+  description: Get a presigned URL to upload a document
+  source_operation: openapi/conxai-docnostic-openapi.json#POST /projects/{projectId}/use-cases/{useCaseId}/documents
+- name: process_document
+  description: Run on-demand document processing
+  source_operation: openapi/conxai-docnostic-openapi.json#POST /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/process
+- name: get_document_status
+  description: Get document processing status
+  source_operation: openapi/conxai-docnostic-openapi.json#GET /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/status
+- name: get_weather
+  description: Retrieve weather data for a lat/lon via OpenMeteo
+  source_operation: openapi/conxai-production-tracking-openapi.json#GET /weather
+deployment:
+  mode: none
+  verified: derived
+  tools: 20
+  checked: '2026-08-12'
+  source: catalog MCP census

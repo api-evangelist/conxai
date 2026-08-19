@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations projects API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by type (standard, master) without param return all"
+              }
+            ]
+          },
+          "docs": "Get project list with proper type standard, master or all"
+        },
+        {
+          "info": {
+            "name": "Create a new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint creates a new project"
+        },
+        {
+          "info": {
+            "name": "Delete standard project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ]
+          },
+          "docs": "Delete a standard project and all its data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

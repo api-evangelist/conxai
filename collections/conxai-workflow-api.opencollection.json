@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations workflow API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "workflow",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a workflow context document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/workflows/:workflowId/workflow-context-document",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Content-Disposition",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the use case."
+              },
+              {
+                "name": "workflowId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the workflow_handlers."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a presigned URL for clients to upload a workflow context document (excel, csv, json) directly to an S3 bucket. In the follow-up PUT request to the presigned URL the file should be the raw binary body of the request. It is important to resend the Content-Type header as well as the Content-Disposition header including the original filename."
+        },
+        {
+          "info": {
+            "name": "Delete workflow context document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/workflows/:workflowId/workflow-context-document/:documentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "workflowId",
+                "value": "",
+                "type": "path",
+                "description": "Workflow Id"
+              },
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path",
+                "description": "Document Id"
+              }
+            ]
+          },
+          "docs": "Delete workflow context document by id"
+        },
+        {
+          "info": {
+            "name": "List workflow context documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/workflows/:workflowId/workflow-context-documents",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the use case."
+              },
+              {
+                "name": "workflowId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the workflow_handlers."
+              }
+            ]
+          },
+          "docs": "Return existing workflow context documents with filename, created date and download link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations project API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/project",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Api-Key",
+              "value": "{{X-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create new project"
+        },
+        {
+          "info": {
+            "name": "Update project data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/project",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Api-Key",
+              "value": "{{X-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update project data"
+        },
+        {
+          "info": {
+            "name": "Get Features in project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/project/:projectId/features"
+          },
+          "docs": "Get project information"
+        },
+        {
+          "info": {
+            "name": "Get project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/project/:uuid"
+          },
+          "docs": "Get project information"
+        },
+        {
+          "info": {
+            "name": "Delete project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/project/:uuid"
+          },
+          "docs": "Delete project information"
+        },
+        {
+          "info": {
+            "name": "Update project features data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/project/features",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Api-Key",
+              "value": "{{X-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update project features data"
+        },
+        {
+          "info": {
+            "name": "Get projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects"
+          },
+          "docs": "Get projects"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

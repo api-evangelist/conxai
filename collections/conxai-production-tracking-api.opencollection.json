@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations production_tracking API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "production_tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/weather",
+            "params": [
+              {
+                "name": "lat",
+                "value": "{{lat}}",
+                "type": "query"
+              },
+              {
+                "name": "long",
+                "value": "{{long}}",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "This endpoint retrieves weather data for a given latitude and longitude. It uses the OpenMeteo API to fetch the weather forecast"
+        },
+        {
+          "info": {
+            "name": "Postprocess",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/:project_ID/postprocess",
+            "params": [
+              {
+                "name": "project_ID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint handles the postprocessing of production tracking data for a given project. It generates two basic graphs (ring_count and phase_count) based on the project type."
+        },
+        {
+          "info": {
+            "name": "Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/:project_ID/logs",
+            "params": [
+              {
+                "name": "project_ID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint retrieves the logs for a given project."
+        },
+        {
+          "info": {
+            "name": "Graphs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/:project_ID//graphs",
+            "params": [
+              {
+                "name": "start",
+                "value": "{{start}}",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "{{end}}",
+                "type": "query"
+              },
+              {
+                "name": "project_ID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint generates graphs based on the provided filters and configurations for a given project. It creates various graphs such as ring count, phase count, ring duration, and phase duration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

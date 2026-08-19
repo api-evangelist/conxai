@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations exports API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List exported files for a use case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/exports",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case UUID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return (default: 20)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip (default: 0)"
+              }
+            ]
+          },
+          "docs": "List exported files for a use case"
+        },
+        {
+          "info": {
+            "name": "Get presigned download link for exported file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/exports/:exportId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case UUID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export UUID"
+              }
+            ]
+          },
+          "docs": "Get presigned download link for exported file"
+        },
+        {
+          "info": {
+            "name": "Delete exported file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/exports/:exportId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case UUID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export UUID"
+              }
+            ]
+          },
+          "docs": "Delete exported file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

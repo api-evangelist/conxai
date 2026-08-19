@@ -1,0 +1,383 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations summary-table API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "summary-table",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Store schema for summary table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the useCase."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Store schema for summary table"
+        },
+        {
+          "info": {
+            "name": "Get summary table data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-data",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Get summary table data"
+        },
+        {
+          "info": {
+            "name": "Create summary table data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-data/create",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Create summary table data and wait for file to be created"
+        },
+        {
+          "info": {
+            "name": "Export summary table data based on filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-data/export",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export summary table data based on filters"
+        },
+        {
+          "info": {
+            "name": "Get summary table data based on filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-data/filter",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return list of summary table data after filtering and sorting"
+        },
+        {
+          "info": {
+            "name": "Post summary table grouped data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-data/grouped",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return data for building filters based on grouped values"
+        },
+        {
+          "info": {
+            "name": "Get summary table raw file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-file",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Returns raw content of the pre-computed summary_table.json from S3"
+        },
+        {
+          "info": {
+            "name": "Get summary table with workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Get summary table with workflow"
+        },
+        {
+          "info": {
+            "name": "Store schema for workflow summary table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the useCase."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Store schema for workflow summary table"
+        },
+        {
+          "info": {
+            "name": "Export workflow summary table data based on filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/export",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export workflow summary table data based on filters"
+        },
+        {
+          "info": {
+            "name": "Get workflow summary table data based on filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/filter",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return workflow list of summary table data after filtering and sorting"
+        },
+        {
+          "info": {
+            "name": "Get summary table workflow schema data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/version/:version",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Get summary table workflow schema data"
+        },
+        {
+          "info": {
+            "name": "Get summary table schema data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table/version/:version",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Get summary table schema data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

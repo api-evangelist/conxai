@@ -1,0 +1,501 @@
+{
+  "item": [
+    {
+      "id": "1be56ca1-0cb2-467f-8480-cd057a7070f5",
+      "name": "Images",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01224bb6-c4fe-464d-9bbe-eba7f0e5e003",
+          "name": "Upload an image",
+          "request": {
+            "name": "Upload an image",
+            "description": {
+              "content": "This endpoint returns a presigned URL for clients to upload an image directly to an S3 bucket. In the follow-up PUT request to the presigned URL, the file should be the raw binary body of the request. It is important to resend the same Content-Type header to this endpoint and to the presigned URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "85135a5b-bc9c-4de8-b582-4039a869cf4d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type of the image file. Must be image/png or image/jpeg",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_id\": \"87f09506-eec8-12ce-250b-bb988ae1b6e2\",\n  \"status\": \"string\",\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58a0f472-fae2-4479-99dd-1c1d9a0aeba2",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type of the image file. Must be image/png or image/jpeg",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c10d8c9-d84c-454b-8a99-a3474d041363",
+          "name": "Receive the solution for the given image and point coordinates",
+          "request": {
+            "name": "Receive the solution for the given image and point coordinates",
+            "description": {
+              "content": "This endpoint provides the AI response including the rle mask of the selected object and the firestop solution for the given image and point coordinates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":imageId",
+                "solutions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "x",
+                  "value": "<integer>",
+                  "description": "(Required) X coordinate of the point to infer."
+                },
+                {
+                  "disabled": false,
+                  "key": "y",
+                  "value": "<integer>",
+                  "description": "(Required) Y coordinate of the point to infer."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imageId",
+                  "description": "(Required) Unique id of the image."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b8509fc8-2519-42c6-9785-1618e9a344f6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageId",
+                    "solutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "y",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageId",
+                      "description": "(Required) Unique id of the image."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rle_mask\": {\n    \"count\": \"P\\\\S25Zi0.....\",\n    \"size\": [\n      640,\n      480\n    ]\n  },\n  \"solution\": {\n    \"fire_rating\": \"string\",\n    \"object_insulation\": \"string\",\n    \"object_material\": \"string\",\n    \"penetrating_object\": \"string\",\n    \"penetration_type\": \"string\",\n    \"supporting_material\": \"string\",\n    \"supporting_structure\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679bc409-4330-4cd8-b96f-55912a555639",
+              "name": "Not ready yet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageId",
+                    "solutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "y",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageId",
+                      "description": "(Required) Unique id of the image."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5469702a-56fa-46dd-a338-3a9477375f65",
+          "name": "Validate a firestop solution",
+          "request": {
+            "name": "Validate a firestop solution",
+            "description": {
+              "content": "This endpoint allows the user to validate a solution corresponding to a clicked point on the image by providing the final solution to the referenced image and point coordinates",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":imageId",
+                "solutions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "x",
+                  "value": "<integer>",
+                  "description": "(Required) X coordinate of the point to infer."
+                },
+                {
+                  "disabled": false,
+                  "key": "y",
+                  "value": "<integer>",
+                  "description": "(Required) Y coordinate of the point to infer."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imageId",
+                  "description": "(Required) Unique id of the image."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fire_rating\": \"<string>\",\n  \"object_insulation\": \"<string>\",\n  \"object_material\": \"<string>\",\n  \"penetrating_object\": \"<string>\",\n  \"penetration_type\": \"<string>\",\n  \"supporting_material\": \"<string>\",\n  \"supporting_structure\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52d00491-a3e6-405e-9eb8-e6e8aef4c444",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageId",
+                    "solutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "y",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageId",
+                      "description": "(Required) Unique id of the image."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fire_rating\": \"<string>\",\n  \"object_insulation\": \"<string>\",\n  \"object_material\": \"<string>\",\n  \"penetrating_object\": \"<string>\",\n  \"penetration_type\": \"<string>\",\n  \"supporting_material\": \"<string>\",\n  \"supporting_structure\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dc170cde-e3c3-4707-8b95-b4378f7acb1c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageId",
+                    "solutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "y",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageId",
+                      "description": "(Required) Unique id of the image."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fire_rating\": \"<string>\",\n  \"object_insulation\": \"<string>\",\n  \"object_material\": \"<string>\",\n  \"penetrating_object\": \"<string>\",\n  \"penetration_type\": \"<string>\",\n  \"supporting_material\": \"<string>\",\n  \"supporting_structure\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//customer.conxai.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c197a252-98c5-4994-80d6-2dce1722fdb1",
+    "name": "Customer annotations Images API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Customer API provide base methods for create company, projects, users, add users to projects, end etc.\n\nContact Support:\n Name: Dmytro Kabachenko\n Email: dmytro.kabachenko@conxai.com",
+      "type": "text/plain"
+    }
+  }
+}

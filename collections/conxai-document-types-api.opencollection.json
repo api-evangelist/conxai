@@ -1,0 +1,171 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations document-types API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "document-types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get document types list for use case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Get document types list for use case"
+        },
+        {
+          "info": {
+            "name": "Create a new document types and update schema for existing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the useCase."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new document types and update schema for existing"
+        },
+        {
+          "info": {
+            "name": "Delete a document types by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the project."
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the document type "
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the use case."
+              }
+            ]
+          },
+          "docs": "Delete a documents type by ID"
+        },
+        {
+          "info": {
+            "name": "Get document type by uuid (latest version)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/version",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              }
+            ]
+          },
+          "docs": "Get document type by uuid with latest version from schema registry"
+        },
+        {
+          "info": {
+            "name": "Get document type by uuid",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/version/:version",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Get document type by uuid"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations workflow-table API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "workflow-table",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create workflow table data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/create",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Triggers workflow table generation asynchronously and returns immediately. Poll /processing-status to track completion."
+        },
+        {
+          "info": {
+            "name": "Save a page of user-edited workflow table data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/edited",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Row offset of the page being saved"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size of the page being saved"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Persists client edits to the workflow table as a separate file so AI regeneration never overwrites user changes. The client sends a single page (same shape as the filter endpoint response) together with the offset/limit that produced it. The handler loads the current table (the edited file when it already exists, otherwise the AI-generated base), re-applies the default sort so positions line up with what the client saw, overwrites the [offset, offset+len) window with the incoming rows, and write"
+        },
+        {
+          "info": {
+            "name": "Get workflow table processing status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/summary-table-workflow/processing-status",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              }
+            ]
+          },
+          "docs": "Returns the processing status of the workflow table generation for this use case.\nStatus values:\n- `idle` — workflow has never been triggered (summary_table.json does not exist)\n- `processing` — workflow is currently running (result file missing or older than trigger file)\n- `completed` — workflow finished successfully (summary_table_workflow.json is newer than summary_table.json)\nDerived from S3 file timestamps — no K8s access required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,800 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Customer annotations samples API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "samples",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              }
+            ]
+          },
+          "docs": "Return list of the samples for current document type"
+        },
+        {
+          "info": {
+            "name": "Bulk delete samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/bulk-delete",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete multiple samples by ID in parallel. Errors per sample are captured in the response but do not interrupt other deletions.\nExample response: [{\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\": {\"status\": \"deleted\"}}, {\"b2c3d4e5-f6a7-8901-bcde-f12345678901\": {\"status\": \"error\", \"message\": \"failed to delete S3 files\"}}]"
+        },
+        {
+          "info": {
+            "name": "Get sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Receive an individual sample of the document, a single page of the document and marks the page as validated."
+        },
+        {
+          "info": {
+            "name": "Delete Sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Delete sample"
+        },
+        {
+          "info": {
+            "name": "Download sample (original or with markups)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/download",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "markup",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes markups in the generated PDF. Default is false."
+              },
+              {
+                "name": "boundingbox",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes bounding boxes in the generated PDF. Default is false."
+              }
+            ]
+          },
+          "docs": "Returns a presigned download link for the original sample or a generated PDF with markups/bounding boxes for master projects_handlers."
+        },
+        {
+          "info": {
+            "name": "Get presigned download link for original sample (master project)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/download-link",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Get presigned download link for original sample (master project)"
+        },
+        {
+          "info": {
+            "name": "Download original sample by sample ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/download-original",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Returns a presigned download link for the original file stored in the originals folder on S3 for a master project sample."
+        },
+        {
+          "info": {
+            "name": "Finish document processing by validating all pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/finish",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Finish document processing by validating all pages. This will copy result files to validated files."
+        },
+        {
+          "info": {
+            "name": "Get presigned URL for uploading sample markup image",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/markup-image/:pageIndex",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "pageIndex",
+                "value": "",
+                "type": "path",
+                "description": "Page Index"
+              }
+            ]
+          },
+          "docs": "Returns a presigned URL for uploading a markup image (PNG) for a specific page of a sample. The file will be overwritten if it already exists."
+        },
+        {
+          "info": {
+            "name": "Get markup data for a sample page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/markup/:pageIndex",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "pageIndex",
+                "value": "",
+                "type": "path",
+                "description": "Page Index"
+              }
+            ]
+          },
+          "docs": "Retrieve markup data for a specific page of a sample"
+        },
+        {
+          "info": {
+            "name": "Store markup data for a sample page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/markup/:pageIndex",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "pageIndex",
+                "value": "",
+                "type": "path",
+                "description": "Page Index"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Store markup data for a specific page of a sample"
+        },
+        {
+          "info": {
+            "name": "Get sample page dimensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/page-dimensions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (0 or omitted returns all pages)"
+              }
+            ]
+          },
+          "docs": "Receive page dimensions for a sample with optional pagination."
+        },
+        {
+          "info": {
+            "name": "Get sample pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/pages",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit"
+              },
+              {
+                "name": "predictions",
+                "value": "",
+                "type": "query",
+                "description": "Set false to turn off predictions"
+              },
+              {
+                "name": "pages",
+                "value": "",
+                "type": "query",
+                "description": "Set false to turn off pages"
+              }
+            ]
+          },
+          "docs": "Receive a list of sample pages with proper status and prediction structure."
+        },
+        {
+          "info": {
+            "name": "Update validated sample by page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/pages/:pageNum",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "path",
+                "description": "Page Num"
+              },
+              {
+                "name": "finalize",
+                "value": "",
+                "type": "query",
+                "description": "Finalize all pages, will create empty validated files"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update validated sample by page"
+        },
+        {
+          "info": {
+            "name": "Update draft sample by page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/pages/:pageNum/draft",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "path",
+                "description": "Page Num"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update draft sample by page"
+        },
+        {
+          "info": {
+            "name": "Generate and download PDF with markups for sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/pdf-with-markups",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "bbox",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes bounding boxes in the generated PDF. Default is false."
+              },
+              {
+                "name": "markup",
+                "value": "",
+                "type": "query",
+                "description": "If false, skips markup annotations_handlers. Default is true."
+              }
+            ]
+          },
+          "docs": "Generate a PDF document with embedded markups from all pages and return a presigned download link"
+        },
+        {
+          "info": {
+            "name": "On demand processing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/process",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              },
+              {
+                "name": "reset",
+                "value": "",
+                "type": "query",
+                "description": "Remove all result and validated files"
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Wait for processing to finish"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate processing on demand and receive result data"
+        },
+        {
+          "info": {
+            "name": "Get sample status by ID for master project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//customer.conxai.ai/projects/:projectId/use-cases/:useCaseId/document-types/:documentTypeId/samples/:sampleId/status",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "useCaseId",
+                "value": "",
+                "type": "path",
+                "description": "Use Case Id"
+              },
+              {
+                "name": "documentTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Document Type Id"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample Id"
+              }
+            ]
+          },
+          "docs": "Retrieves the status of a specific sample by ID for a specific document type within a use case. Returns sample metadata including page status, document type information, and processing status. This endpoint is used for master projects to fetch individual sample information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
