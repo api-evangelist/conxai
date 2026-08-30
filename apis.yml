@@ -97,7 +97,7 @@ apis:
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
   tags:
-  - Camera
+  - camera
   tags_raw:
   - camera
   properties:
@@ -119,7 +119,7 @@ apis:
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
   tags:
-  - Document Types
+  - document-types
   tags_raw:
   - document-types
   properties:
@@ -228,8 +228,7 @@ apis:
   description: The production_tracking API from Conxai — 4 operation(s) for production_tracking.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
-  tags:
-  - Production Tracking
+  tags: []
   tags_raw:
   - production_tracking
   properties:
@@ -359,7 +358,7 @@ apis:
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
   tags:
-  - Use Cases
+  - use-cases
   tags_raw:
   - use-cases
   properties:
