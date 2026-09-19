@@ -76,7 +76,7 @@ apis:
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
   tags:
-  - Annotations
+  - Annotation
   tags_raw:
   - annotations
   properties:
