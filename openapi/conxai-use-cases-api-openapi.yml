@@ -1,27 +1,27 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations use-cases API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Use Cases API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: use-cases
+- name: Use Cases
 paths:
   /projects/{projectId}/use-cases:
     put:
       security:
       - BearerAuth: []
-      description: Update use case
       tags:
-      - use-cases
+      - Use Cases
       summary: Update use case
       parameters:
       - description: Project UUID
@@ -51,12 +51,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCases
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       description: Post use cases
       tags:
-      - use-cases
+      - Use Cases
       summary: Create Use Case
       parameters:
       - description: Project UUID
@@ -86,13 +88,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCases
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}:
     delete:
       security:
       - BearerAuth: []
       description: Delete use-cases
       tags:
-      - use-cases
+      - Use Cases
       summary: Delete Use Cases
       parameters:
       - description: Project UUID
@@ -122,13 +126,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteProjectsByProjectIdUseCasesByUseCaseId
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/clone:
     post:
       security:
       - BearerAuth: []
       description: Creates a new use case (same request as create) and then clones all data from target useCaseId
       tags:
-      - use-cases
+      - Use Cases
       summary: Create Use Case by cloning existing one
       parameters:
       - description: Master Project UUID
@@ -180,13 +186,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdClone
+      x-operation-id-source: derived
   /projects/{standardProjectId}/link:
     put:
       security:
       - BearerAuth: []
-      description: Link use cases to projects
       tags:
-      - use-cases
+      - Use Cases
       summary: Link use cases to projects
       parameters:
       - description: Standard project id
@@ -223,13 +230,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByStandardProjectIdLink
+      x-operation-id-source: derived
   /projects/{standardProjectId}/use-cases:
     get:
       security:
       - JwtKeyAuth: []
-      description: Get use case by standard project id
       tags:
-      - use-cases
+      - Use Cases
       summary: Get use case by standard project id
       parameters:
       - description: Project UUID
@@ -261,13 +269,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByStandardProjectIdUseCases
+      x-operation-id-source: derived
   /use-cases:
     get:
       security:
       - JwtKeyAuth: []
-      description: Get available use cases
       tags:
-      - use-cases
+      - Use Cases
       summary: Get available use cases
       responses:
         '200':
@@ -292,11 +301,62 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getUseCases
+      x-operation-id-source: derived
 components:
   schemas:
+    conxai_com_docs-api_structures_api.LinkedProject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+      type: object
+      required:
+      - name
+      properties:
+        description:
+          type: string
+        name:
+          type: string
     fiber.Map:
       type: object
       additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.PostUseCaseResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    api_use_cases_handlers.CloneUseCaseRequest:
+      type: object
+      properties:
+        clone_document_types:
+          description: 'Optional list of document type UUIDs to clone. If not empty, only these are cloned
+
+            and summary table/schema copying is skipped. Values must be UUIDs.'
+          type: array
+          items:
+            type: string
+          example:
+          - '["3abf974f-bbca-4a01-a5b2-639c646a6d10"'
+          - '"c1e0b4f3-2c39-4a31-8e0f-6b5e3f8dc9ff"]'
+        description:
+          description: Optional description for the cloned use case
+          type: string
+          example: This is a cloned use case
+        name:
+          description: Human-readable name for the new cloned use case
+          type: string
+          example: Selling cars NEW
     conxai_com_docs-api_structures_api.UseCaseLinkToProject:
       type: object
       properties:
@@ -304,10 +364,12 @@ components:
           type: string
         use_case_id:
           type: string
-    conxai_com_docs-api_structures_api.PostUseCaseResponse:
+    conxai_com_docs-api_structures_api.ExportType:
       type: object
       properties:
-        id:
+        title:
+          type: string
+        type:
           type: string
     conxai_com_docs-api_structures_api.OneUseCaseResponse:
       type: object
@@ -342,57 +404,6 @@ components:
           type: string
         summary_table_workflow_schema_version:
           type: string
-    api_use_cases_handlers.CloneUseCaseRequest:
-      type: object
-      properties:
-        clone_document_types:
-          description: 'Optional list of document type UUIDs to clone. If not empty, only these are cloned
-
-            and summary table/schema copying is skipped. Values must be UUIDs.'
-          type: array
-          items:
-            type: string
-          example:
-          - '["3abf974f-bbca-4a01-a5b2-639c646a6d10"'
-          - '"c1e0b4f3-2c39-4a31-8e0f-6b5e3f8dc9ff"]'
-        description:
-          description: Optional description for the cloned use case
-          type: string
-          example: This is a cloned use case
-        name:
-          description: Human-readable name for the new cloned use case
-          type: string
-          example: Selling cars NEW
-    conxai_com_docs-api_structures_api.LinkedProject:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.ExportType:
-      type: object
-      properties:
-        title:
-          type: string
-        type:
-          type: string
-    conxai_com_docs-api_structures_api.PostUseCaseRequest:
-      type: object
-      required:
-      - name
-      properties:
-        description:
-          type: string
-        name:
-          type: string
   requestBodies:
     conxai_com_docs-api_structures_api.PostUseCaseRequest:
       content:
@@ -407,6 +418,8 @@ components:
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,17 +1,12 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations production_tracking API
-  termsOfService: http://swagger.io/terms/
-  contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: '1.0'
+  title: Production Tracking API
+  description: This collection contains all the endpoints to the Production Tracking tab for Sitelens
+  version: 1.0.0
 servers:
-- url: //customer.conxai.ai
+- url: https://pt.conxai.ai
+security:
+- ApiKeyAuth: []
 tags:
 - name: production_tracking
 paths:
@@ -37,6 +32,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getWeather
+      x-operation-id-source: derived
   /{project_ID}/postprocess:
     get:
       tags:
@@ -54,6 +51,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getByProjectIDPostprocess
+      x-operation-id-source: derived
   /{project_ID}/logs:
     get:
       tags:
@@ -71,6 +70,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getByProjectIDLogs
+      x-operation-id-source: derived
   /{project_ID}//graphs:
     post:
       tags:
@@ -100,13 +101,14 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: postByProjectIDGraphs
+      x-operation-id-source: derived
 components:
   securitySchemes:
     ApiKeyAuth:
-      description: Provide the given API key
       type: apiKey
-      name: X-Api-Key
       in: header
+      name: X-API-Key
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

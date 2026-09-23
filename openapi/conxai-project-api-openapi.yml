@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations project API
+  title: Customer Project API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Dmytro Kabachenko
@@ -13,15 +13,14 @@ info:
 servers:
 - url: //customer.conxai.ai
 tags:
-- name: project
+- name: Project
 paths:
   /project:
     put:
       security:
       - ApiKeyAuth: []
-      description: Update project data
       tags:
-      - project
+      - Project
       summary: Update project data
       requestBody:
         content:
@@ -49,12 +48,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putProject
+      x-operation-id-source: derived
     post:
       security:
       - ApiKeyAuth: []
-      description: Create new project
       tags:
-      - project
+      - Project
       summary: Create new project
       requestBody:
         content:
@@ -82,11 +82,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postProject
+      x-operation-id-source: derived
   /project/:projectId/features:
     get:
       description: Get project information
       tags:
-      - project
+      - Project
       summary: Get Features in project
       responses:
         '200':
@@ -107,11 +109,13 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProject:projectIdFeatures
+      x-operation-id-source: derived
   /project/:uuid:
     get:
       description: Get project information
       tags:
-      - project
+      - Project
       summary: Get project
       responses:
         '200':
@@ -132,10 +136,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProject:uuid
+      x-operation-id-source: derived
     delete:
       description: Delete project information
       tags:
-      - project
+      - Project
       summary: Delete project
       responses:
         '200':
@@ -152,13 +158,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: deleteProject:uuid
+      x-operation-id-source: derived
   /project/features:
     put:
       security:
       - ApiKeyAuth: []
-      description: Update project features data
       tags:
-      - project
+      - Project
       summary: Update project features data
       requestBody:
         content:
@@ -186,11 +193,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putProjectFeatures
+      x-operation-id-source: derived
   /projects:
     get:
-      description: Get projects
       tags:
-      - project
+      - Project
       summary: Get projects
       responses:
         '200':
@@ -215,77 +223,10 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjects
+      x-operation-id-source: derived
 components:
   schemas:
-    transformers.ProjectLocation:
-      type: object
-      properties:
-        lat:
-          type: number
-        long:
-          type: number
-        name:
-          type: string
-        timezone_name:
-          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    ProjectRequest:
-      type: object
-      properties:
-        image_cover:
-          description: Image cover base64
-          type: string
-        name:
-          description: Project name
-          type: string
-        settings:
-          $ref: '#/components/schemas/transformers.ProjectSettings'
-        uuid:
-          description: Uniq project id
-          type: string
-    transformers.Feature:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        key:
-          type: string
-    FeaturesRequest:
-      type: object
-      properties:
-        features:
-          description: New Features to update
-          type: array
-          items:
-            type: string
-        project_id:
-          description: Uniq project id
-          type: string
-    transformers.ProjectSettings:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/transformers.ProjectLocation'
-        start_date:
-          type: string
-    ProjectFeaturesResponse:
-      type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/transformers.Feature'
-        id:
-          type: integer
-        project_id:
-          type: string
     ProjectResponse:
       type: object
       properties:
@@ -309,6 +250,27 @@ components:
         uuid:
           description: Uniq project id
           type: string
+    transformers.ProjectSettings:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/transformers.ProjectLocation'
+        start_date:
+          type: string
+    ProjectRequest:
+      type: object
+      properties:
+        image_cover:
+          description: Image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          $ref: '#/components/schemas/transformers.ProjectSettings'
+        uuid:
+          description: Uniq project id
+          type: string
     transformers.ProjectRequest:
       type: object
       properties:
@@ -325,6 +287,54 @@ components:
           description: Project settings
           allOf:
           - $ref: '#/components/schemas/transformers.ProjectSettings'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    transformers.Feature:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        key:
+          type: string
+    FeaturesRequest:
+      type: object
+      properties:
+        features:
+          description: New Features to update
+          type: array
+          items:
+            type: string
+        project_id:
+          description: Uniq project id
+          type: string
+    transformers.ProjectLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
+          type: string
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
+    ProjectFeaturesResponse:
+      type: object
+      properties:
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformers.Feature'
+        id:
+          type: integer
+        project_id:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key

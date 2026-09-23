@@ -1,19 +1,20 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations projects API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Projects API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: projects
+- name: Projects
 paths:
   /projects:
     get:
@@ -21,7 +22,7 @@ paths:
       - BearerAuth: []
       description: Get project list with proper type standard, master or all
       tags:
-      - projects
+      - Projects
       summary: Get project list
       parameters:
       - description: Filter by type (standard, master) without param return all
@@ -50,12 +51,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjects
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       description: This endpoint creates a new project
       tags:
-      - projects
+      - Projects
       summary: Create a new project
       requestBody:
         content:
@@ -83,13 +86,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjects
+      x-operation-id-source: derived
   /projects/{projectId}:
     delete:
       security:
       - BearerAuth: []
       description: Delete a standard project and all its data
       tags:
-      - projects
+      - Projects
       summary: Delete standard project
       parameters:
       - description: Project UUID
@@ -119,11 +124,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteProjectsByProjectId
+      x-operation-id-source: derived
 components:
   schemas:
-    fiber.Map:
+    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
       type: object
-      additionalProperties: true
+      properties:
+        master_id:
+          type: string
+        use_case_id:
+          type: string
+    api_projects_handlers.ProjectRequestBody:
+      type: object
+      properties:
+        location:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/api_projects_handlers.Type'
     conxai_com_docs-api_platform_s2s.ProjectLocation:
       type: object
       properties:
@@ -136,44 +160,9 @@ components:
         timezone_name:
           description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
-    api_projects_handlers.Type:
-      type: string
-      enum:
-      - master
-      - standard
-      - test
-      x-enum-varnames:
-      - Master
-      - Standard
-      - Test
-    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+    fiber.Map:
       type: object
-      properties:
-        master_id:
-          type: string
-        use_case_id:
-          type: string
-    conxai_com_docs-api_platform_s2s.ProjectResponse:
-      type: object
-      properties:
-        created_at:
-          type: string
-        created_by:
-          type: string
-        created_by_email:
-          type: string
-        external_id:
-          type: string
-        image_cover:
-          type: string
-        name:
-          type: string
-        settings:
-          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
-        updated_at:
-          type: string
-        uuid:
-          type: string
+      additionalProperties: true
     conxai_com_docs-api_structures_api.ProjectWithUseCases:
       type: object
       properties:
@@ -199,6 +188,16 @@ components:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
         uuid:
           type: string
+    api_projects_handlers.Type:
+      type: string
+      enum:
+      - master
+      - standard
+      - test
+      x-enum-varnames:
+      - Master
+      - Standard
+      - Test
     ErrorResponse:
       type: object
       properties:
@@ -206,19 +205,27 @@ components:
           type: string
         status:
           type: string
-    api_projects_handlers.ProjectRequestBody:
+    conxai_com_docs-api_platform_s2s.ProjectResponse:
       type: object
       properties:
-        location:
+        created_at:
           type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
+        created_by:
+          type: string
+        created_by_email:
+          type: string
+        external_id:
+          type: string
+        image_cover:
+          type: string
         name:
           type: string
-        type:
-          $ref: '#/components/schemas/api_projects_handlers.Type'
+        settings:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
+        updated_at:
+          type: string
+        uuid:
+          type: string
     conxai_com_docs-api_platform_s2s.ProjectSettings:
       type: object
       properties:
@@ -240,6 +247,8 @@ components:
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

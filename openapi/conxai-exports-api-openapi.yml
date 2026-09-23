@@ -1,26 +1,27 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations exports API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Exports API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: exports
+- name: Exports
 paths:
   /projects/{projectId}/use-cases/{useCaseId}/exports:
     get:
       security:
       - BearerAuth: []
       tags:
-      - exports
+      - Exports
       summary: List exported files for a use case
       parameters:
       - description: Project UUID
@@ -59,12 +60,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ExportFile'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdExports
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/exports/{exportId}:
     get:
       security:
       - BearerAuth: []
       tags:
-      - exports
+      - Exports
       summary: Get presigned download link for exported file
       parameters:
       - description: Project UUID
@@ -108,11 +111,13 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdExportsByExportId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       tags:
-      - exports
+      - Exports
       summary: Delete exported file
       parameters:
       - description: Project UUID
@@ -154,6 +159,8 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+      operationId: deleteProjectsByProjectIdUseCasesByUseCaseIdExportsByExportId
+      x-operation-id-source: derived
 components:
   schemas:
     conxai_com_docs-api_structures_api.ExportFile:
@@ -175,6 +182,8 @@ components:
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,17 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations summary-table API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Summary Table API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
 - name: summary-table
 paths:
@@ -19,7 +20,6 @@ paths:
     put:
       security:
       - BearerAuth: []
-      description: Store schema for summary table
       tags:
       - summary-table
       summary: Store schema for summary table
@@ -57,11 +57,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdSummaryTable
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-data:
     get:
       security:
       - BearerAuth: []
-      description: Get summary table data
       tags:
       - summary-table
       summary: Get summary table data
@@ -96,6 +97,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdSummaryTableData
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-data/create:
     post:
       security:
@@ -136,11 +139,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableDataCreate
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-data/export:
     post:
       security:
       - BearerAuth: []
-      description: Export summary table data based on filters
       tags:
       - summary-table
       summary: Export summary table data based on filters
@@ -184,6 +188,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableDataExport
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-data/filter:
     post:
       security:
@@ -226,6 +232,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableDataFilter
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-data/grouped:
     post:
       security:
@@ -275,6 +283,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableDataGrouped
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-file:
     get:
       security:
@@ -313,11 +323,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdSummaryTableFile
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow:
     get:
       security:
       - BearerAuth: []
-      description: Get summary table with workflow
       tags:
       - summary-table
       summary: Get summary table with workflow
@@ -352,10 +363,11 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdSummaryTableWorkflow
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
-      description: Store schema for workflow summary table
       tags:
       - summary-table
       summary: Store schema for workflow summary table
@@ -393,11 +405,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdSummaryTableWorkflow
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/export:
     post:
       security:
       - BearerAuth: []
-      description: Export workflow summary table data based on filters
       tags:
       - summary-table
       summary: Export workflow summary table data based on filters
@@ -441,6 +454,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableWorkflowExport
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/filter:
     post:
       security:
@@ -483,11 +498,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdSummaryTableWorkflowFilter
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table-workflow/version/{version}:
     get:
       security:
       - BearerAuth: []
-      description: Get summary table workflow schema data
       tags:
       - summary-table
       summary: Get summary table workflow schema data
@@ -529,11 +545,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdSummaryTableWorkflowVersionByVersion
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/summary-table/version/{version}:
     get:
       security:
       - BearerAuth: []
-      description: Get summary table schema data
       tags:
       - summary-table
       summary: Get summary table schema data
@@ -575,16 +592,10 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdSummaryTableVersionByVersion
+      x-operation-id-source: derived
 components:
   schemas:
-    fiber.Map:
-      type: object
-      additionalProperties: true
-    conxai_com_docs-api_structures_api.SummaryTableDataStructure:
-      type: object
-      properties:
-        use_case:
-          type: string
     conxai_com_docs-api_structures_api.SummaryTableDataResponse:
       type: object
       properties:
@@ -598,6 +609,47 @@ components:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataStructure'
     api_summary_table_handlers.SummaryTableSchemaRequest:
       type: object
+    conxai_com_docs-api_structures_api.SummaryTableDataGroupedResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items: {}
+    conxai_com_docs-api_structures_api.SummaryTableDataExportResponse:
+      type: object
+      properties:
+        file_link:
+          type: string
+    conxai_com_docs-api_structures_api.SummaryTableRow:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    api_summary_table_handlers.SummaryTableSchemaResponse:
+      type: object
+      properties:
+        version:
+          type: string
+    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    api_summary_table_handlers.SummaryTableSchemaVersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
     conxai_com_docs-api_structures_api.SummaryTableCell:
       type: object
       properties:
@@ -607,35 +659,6 @@ components:
           items:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessage'
         value: {}
-    conxai_com_docs-api_structures_api.SummaryTableDataGroupedResponse:
-      type: object
-      additionalProperties:
-        type: array
-        items: {}
-    api_summary_table_handlers.SummaryTableSchemaResponse:
-      type: object
-      properties:
-        version:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
-    conxai_com_docs-api_structures_api.SummaryTableDataExportResponse:
-      type: object
-      properties:
-        file_link:
-          type: string
     conxai_com_docs-api_structures_api.SummaryTableWorkflowResponseDoc:
       type: object
       properties:
@@ -645,11 +668,6 @@ components:
         summary_table_workflow:
           type: object
           additionalProperties: true
-    api_summary_table_handlers.SummaryTableSchemaVersionResponse:
-      type: object
-      properties:
-        version:
-          type: string
     conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
       type: string
       enum:
@@ -660,12 +678,13 @@ components:
       - SummaryTableCellMessageTypeSuccess
       - SummaryTableCellMessageTypeWarning
       - SummaryTableCellMessageTypeError
-    conxai_com_docs-api_structures_api.SummaryTableRow:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
     conxai_com_docs-api_structures_api.SummaryTableFilterRequest:
       type: object
+    conxai_com_docs-api_structures_api.SummaryTableDataStructure:
+      type: object
+      properties:
+        use_case:
+          type: string
   requestBodies:
     conxai_com_docs-api_structures_api.SummaryTableFilterRequest:
       content:
@@ -687,6 +706,8 @@ components:
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

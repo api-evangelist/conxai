@@ -1,19 +1,20 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations integrations API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Integrations API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: integrations
+- name: Integrations
 paths:
   /integrations/box/exchange:
     post:
@@ -21,7 +22,7 @@ paths:
       - BearerAuth: []
       description: Exchange a Box.com OAuth2 authorization code for an access token
       tags:
-      - integrations
+      - Integrations
       summary: Exchange Box authorization code
       requestBody:
         content:
@@ -55,13 +56,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BoxErrorResponse'
+      operationId: postIntegrationsBoxExchange
+      x-operation-id-source: derived
   /integrations/box/refresh:
     post:
       security:
       - BearerAuth: []
       description: Use the stored refresh token to obtain a new Box.com access token
       tags:
-      - integrations
+      - Integrations
       summary: Refresh Box access token
       responses:
         '200':
@@ -82,13 +85,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BoxErrorResponse'
+      operationId: postIntegrationsBoxRefresh
+      x-operation-id-source: derived
   /integrations/box/revoke:
     delete:
       security:
       - BearerAuth: []
       description: Revokes the stored Box.com access token with Box and removes it from cache. Idempotent – returns 200 even when no token exists.
       tags:
-      - integrations
+      - Integrations
       summary: Revoke Box integration
       responses:
         '200':
@@ -109,13 +114,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BoxErrorResponse'
+      operationId: deleteIntegrationsBoxRevoke
+      x-operation-id-source: derived
   /integrations/box/token:
     get:
       security:
       - BearerAuth: []
       description: 'Returns isConnected: true with the access token when a cached token exists, isConnected: false otherwise'
       tags:
-      - integrations
+      - Integrations
       summary: Get Box connection status
       responses:
         '200':
@@ -136,13 +143,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BoxErrorResponse'
+      operationId: getIntegrationsBoxToken
+      x-operation-id-source: derived
   /integrations/zendesk/jwt:
     get:
       security:
       - BearerAuth: []
       description: Creates a signed JWT for Zendesk Messaging on behalf of the authenticated user
       tags:
-      - integrations
+      - Integrations
       summary: Generate Zendesk JWT
       responses:
         '200':
@@ -163,37 +172,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ZendeskErrorResponse'
+      operationId: getIntegrationsZendeskJwt
+      x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_structures_api.BoxRevokeResponse:
-      type: object
-      properties:
-        message:
-          type: string
-    conxai_com_docs-api_structures_api.BoxErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
     conxai_com_docs-api_structures_api.ZendeskErrorResponse:
       type: object
       properties:
         error:
           type: string
-    conxai_com_docs-api_structures_api.BoxTokenStatusResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        expires_at:
-          description: Unix timestamp in milliseconds
-          type: integer
-        is_connected:
-          type: boolean
     conxai_com_docs-api_structures_api.ExchangeBoxTokenRequest:
       type: object
       properties:
         code:
+          type: string
+    conxai_com_docs-api_structures_api.BoxErrorResponse:
+      type: object
+      properties:
+        error:
           type: string
     conxai_com_docs-api_structures_api.BoxTokenResponse:
       type: object
@@ -210,12 +206,29 @@ components:
       properties:
         token:
           type: string
+    conxai_com_docs-api_structures_api.BoxRevokeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    conxai_com_docs-api_structures_api.BoxTokenStatusResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_at:
+          description: Unix timestamp in milliseconds
+          type: integer
+        is_connected:
+          type: boolean
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

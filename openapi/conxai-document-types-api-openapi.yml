@@ -1,27 +1,27 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations document-types API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Document Types API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: document-types
+- name: Document Types
 paths:
   /projects/{projectId}/use-cases/{useCaseId}/document-types:
     get:
       security:
       - BearerAuth: []
-      description: Get document types list for use case
       tags:
-      - document-types
+      - Document Types
       summary: Get document types list for use case
       parameters:
       - description: Project UUID
@@ -57,12 +57,13 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentTypes
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
-      description: Create a new document types and update schema for existing
       tags:
-      - document-types
+      - Document Types
       summary: Create a new document types and update schema for existing
       parameters:
       - description: Unique id of the project.
@@ -103,13 +104,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentTypes
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}:
     delete:
       security:
       - BearerAuth: []
       description: Delete a documents type by ID
       tags:
-      - document-types
+      - Document Types
       summary: Delete a document types by ID
       parameters:
       - description: Unique id of the project.
@@ -149,13 +152,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: deleteProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeId
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/version:
     get:
       security:
       - BearerAuth: []
       description: Get document type by uuid with latest version from schema registry
       tags:
-      - document-types
+      - Document Types
       summary: Get document type by uuid (latest version)
       parameters:
       - description: Project UUID
@@ -195,13 +200,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeIdVersion
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/version/{version}:
     get:
       security:
       - BearerAuth: []
-      description: Get document type by uuid
       tags:
-      - document-types
+      - Document Types
       summary: Get document type by uuid
       parameters:
       - description: Project UUID
@@ -247,17 +253,35 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeIdVersionByVersion
+      x-operation-id-source: derived
 components:
   schemas:
     fiber.Map:
       type: object
       additionalProperties: true
+    conxai_com_docs-api_structures_api.DocumentTypeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
     conxai_com_docs-api_structures_api.DocumentTypeRequest:
       type: object
       properties:
         id:
           type: string
         name:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
           type: string
     api_document_types_handlers.DocumentSchemaStructure:
       type: object
@@ -268,13 +292,6 @@ components:
           type: string
         version:
           type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
     api_document_types_handlers.GetDocumentTypeOne:
       type: object
       properties:
@@ -286,21 +303,14 @@ components:
           type: integer
         version:
           type: string
-    conxai_com_docs-api_structures_api.DocumentTypeResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header

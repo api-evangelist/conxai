@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations users API
+  title: Customer Users API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Dmytro Kabachenko
@@ -13,7 +13,7 @@ info:
 servers:
 - url: //customer.conxai.ai
 tags:
-- name: users
+- name: Users
 paths:
   /users/:projectId:
     get:
@@ -21,7 +21,7 @@ paths:
       - ApiKeyAuth: []
       description: Get users by project id
       tags:
-      - users
+      - Users
       summary: Get users by project
       responses:
         '200':
@@ -44,13 +44,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getUsers:projectId
+      x-operation-id-source: derived
   /users/:projectId/userUuid:
     delete:
       security:
       - ApiKeyAuth: []
       description: Remove users from project by user id
       tags:
-      - users
+      - Users
       summary: Remove users from project
       responses:
         '200':
@@ -67,13 +69,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteUsers:projectIdUserUuid
+      x-operation-id-source: derived
   /users/add-to-project:
     post:
       security:
       - ApiKeyAuth: []
       description: Add user to project by email and project id
       tags:
-      - users
+      - Users
       summary: Add user to project
       requestBody:
         content:
@@ -97,19 +101,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postUsersAddToProject
+      x-operation-id-source: derived
 components:
   schemas:
-    platform.CognitoUser:
-      type: object
-      properties:
-        confirmed:
-          type: boolean
-        created_at:
-          type: string
-        email:
-          type: string
-        uuid:
-          type: string
     UserAddToProjectRequest:
       type: object
       properties:
@@ -125,6 +120,17 @@ components:
         error:
           type: string
         status:
+          type: string
+    platform.CognitoUser:
+      type: object
+      properties:
+        confirmed:
+          type: boolean
+        created_at:
+          type: string
+        email:
+          type: string
+        uuid:
           type: string
   securitySchemes:
     ApiKeyAuth:

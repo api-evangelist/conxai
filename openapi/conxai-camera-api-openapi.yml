@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations camera API
+  title: Customer Camera API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Dmytro Kabachenko
@@ -13,15 +13,14 @@ info:
 servers:
 - url: //customer.conxai.ai
 tags:
-- name: camera
+- name: Camera
 paths:
   /camera:
     post:
       security:
       - ApiKeyAuth: []
-      description: Create new camera
       tags:
-      - camera
+      - Camera
       summary: Create new camera
       requestBody:
         content:
@@ -49,11 +48,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postCamera
+      x-operation-id-source: derived
   /camera-info/:cameraExternalId:
     get:
-      description: Get camera info
       tags:
-      - camera
+      - Camera
       summary: Get camera info
       responses:
         '200':
@@ -74,11 +74,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getCameraInfo:cameraExternalId
+      x-operation-id-source: derived
   /camera/:uuid:
     get:
-      description: Get camera
       tags:
-      - camera
+      - Camera
       summary: Get camera
       responses:
         '200':
@@ -99,10 +100,11 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getCamera:uuid
+      x-operation-id-source: derived
     delete:
-      description: Delete camera
       tags:
-      - camera
+      - Camera
       summary: Delete camera
       responses:
         '200':
@@ -119,11 +121,12 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: deleteCamera:uuid
+      x-operation-id-source: derived
   /projects/:projectId/cameras:
     get:
-      description: Get cameras by project id
       tags:
-      - camera
+      - Camera
       summary: Get cameras by project id
       responses:
         '200':
@@ -148,37 +151,10 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjects:projectIdCameras
+      x-operation-id-source: derived
 components:
   schemas:
-    transformers.CameraInfoResponse:
-      type: object
-      properties:
-        camera_external_id:
-          type: string
-        camera_internal_id:
-          type: string
-        project_external_id:
-          type: string
-        project_internal_id:
-          type: string
-        project_timezone:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    transformers.CameraByProjectId:
-      type: object
-      properties:
-        external_id:
-          type: string
-        name:
-          type: string
-        uuid:
-          type: string
     api_handlers.CameraResponse:
       type: object
       properties:
@@ -194,6 +170,26 @@ components:
         uuid:
           description: Uniq camera id
           type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    transformers.CameraInfoResponse:
+      type: object
+      properties:
+        camera_external_id:
+          type: string
+        camera_internal_id:
+          type: string
+        project_external_id:
+          type: string
+        project_internal_id:
+          type: string
+        project_timezone:
+          type: string
     api_handlers.CameraRequest:
       type: object
       properties:
@@ -205,6 +201,15 @@ components:
           type: string
         project_uuid:
           description: Project uuid
+          type: string
+    transformers.CameraByProjectId:
+      type: object
+      properties:
+        external_id:
+          type: string
+        name:
+          type: string
+        uuid:
           type: string
   securitySchemes:
     ApiKeyAuth:

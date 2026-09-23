@@ -1,19 +1,20 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: Customer API provide base methods for create company, projects, users, add users to projects, end etc.
-  title: Customer annotations documents API
+  description: This is the Conxai Docnostic API of conxai.
+  title: Conxai Docnostic Documents API
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Dmytro Kabachenko
-    email: dmytro.kabachenko@conxai.com
+    name: API Support
+    url: http://www.swagger.io/support
+    email: support@swagger.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: '1.0'
 servers:
-- url: //customer.conxai.ai
+- url: //docs.ui.conxai.ai
 tags:
-- name: documents
+- name: Documents
 paths:
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}:
     post:
@@ -21,7 +22,7 @@ paths:
       - BearerAuth: []
       description: This endpoint provides a presigned URL for clients to upload a document or image directly to an S3 bucket. In the follow-up PUT request to the presigned URL the file should be the raw binary body of the request. It is important to resend the Content-Type header as well as the Content-Disposition header including the original filename. PNGs and JPGs will be considered a single page document and PDFs will be split into pages.
       tags:
-      - documents
+      - Documents
       summary: Upload a document
       parameters:
       - description: Unique id of the project.
@@ -69,13 +70,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeId
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/samples/{sampleId}/validated:
     put:
       security:
       - BearerAuth: []
-      description: Load validated document
       tags:
-      - documents
+      - Documents
       summary: Load validated document
       parameters:
       - description: Project UUID
@@ -123,13 +125,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeIdSamplesBySampleIdValidated
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/status-list:
     post:
       security:
       - BearerAuth: []
       description: Return sample loading and splitting status
       tags:
-      - documents
+      - Documents
       summary: Get sample status list
       parameters:
       - description: Project UUID
@@ -179,13 +183,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeIdStatusList
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/document-types/{documentTypeId}/{fileId}/status:
     get:
       security:
       - BearerAuth: []
       description: Return sample loading and splitting status
       tags:
-      - documents
+      - Documents
       summary: Get sample status
       parameters:
       - description: Project UUID
@@ -237,13 +243,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentTypesByDocumentTypeIdByFileIdStatus
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents:
     get:
       security:
       - BearerAuth: []
       description: 'Retrieves a list of documents for a specific use case within a standard project. Returns document metadata including page status, document type information, and processing status. The response includes training sync status (is_training_version_synced) which can be: nil (samples not copied), true (synced and up-to-date), or false (synced but not latest version). This endpoint is used for standard projects (non-master projects) to fetch document information.'
       tags:
-      - documents
+      - Documents
       summary: Get documents for standard project
       parameters:
       - description: Standard project UUID (must not start with '00')
@@ -279,12 +287,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocuments
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       description: This endpoint provides a presigned URL for clients to upload a document or image directly to an S3 bucket. In the follow-up PUT request to the presigned URL the file should be the raw binary body of the request. It is important to resend the Content-Type header as well as the Content-Disposition header including the original filename. PNGs and JPGs will be considered a single page document and PDFs will be split into pages.
       tags:
-      - documents
+      - Documents
       summary: Upload a document to standard project
       parameters:
       - description: Unique id of the project.
@@ -326,12 +336,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocuments
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       description: Delete all documents in a use case. Documents are deleted in parallel using a goroutine pool.
       tags:
-      - documents
+      - Documents
       summary: Delete all documents in a use case
       parameters:
       - description: Project UUID
@@ -365,6 +377,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: deleteProjectsByProjectIdUseCasesByUseCaseIdDocuments
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/bulk-delete:
     post:
       security:
@@ -373,7 +387,7 @@ paths:
 
         Example response: [{"a1b2c3d4-e5f6-7890-abcd-ef1234567890": {"status": "deleted"}}, {"b2c3d4e5-f6a7-8901-bcde-f12345678901": {"status": "error", "message": "failed to delete S3 files"}}]'
       tags:
-      - documents
+      - Documents
       summary: Bulk delete documents
       parameters:
       - description: Project UUID
@@ -418,6 +432,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentsBulkDelete
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/bulk-process:
     post:
       security:
@@ -426,7 +442,7 @@ paths:
 
         Example response: [{"a1b2c3d4-e5f6-7890-abcd-ef1234567890": {"status": "processing"}}, {"b2c3d4e5-f6a7-8901-bcde-f12345678901": {"status": "error", "message": "failed to send cloud event"}}]'
       tags:
-      - documents
+      - Documents
       summary: Bulk reprocess documents
       parameters:
       - description: Project UUID
@@ -476,13 +492,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentsBulkProcess
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}:
     delete:
       security:
       - BearerAuth: []
-      description: Delete document standard project
       tags:
-      - documents
+      - Documents
       summary: Delete document standard project
       parameters:
       - description: Project UUID
@@ -518,13 +535,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentId
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/download:
     get:
       security:
       - BearerAuth: []
       description: Returns a presigned download link for the original document or a generated PDF with markups/bounding boxes.
       tags:
-      - documents
+      - Documents
       summary: Download document (original or with markups)
       parameters:
       - description: Project UUID
@@ -580,12 +599,14 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdDownload
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/download-link:
     get:
       security:
       - BearerAuth: []
       tags:
-      - documents
+      - Documents
       summary: Get presigned download link for original document (standard project)
       parameters:
       - description: Project UUID
@@ -613,13 +634,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/conxai_com_docs-api_structures_api.DownloadLinkResponse'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdDownloadLink
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/finish:
     post:
       security:
       - BearerAuth: []
       description: Finish document processing by validating all pages. This will copy draft files (if they exist) or result files to validated files, prioritizing user edits over AI results.
       tags:
-      - documents
+      - Documents
       summary: Finish document processing by validating all pages
       parameters:
       - description: Project UUID
@@ -661,13 +684,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdFinish
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/markup/{pageIndex}:
     get:
       security:
       - BearerAuth: []
       description: Retrieve markup data for a specific page of a document
       tags:
-      - documents
+      - Documents
       summary: Get markup data for a document page
       parameters:
       - description: Project UUID
@@ -714,12 +739,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdMarkupByPageIndex
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       description: Store markup data for a specific page of a document
       tags:
-      - documents
+      - Documents
       summary: Store markup data for a document page
       parameters:
       - description: Project UUID
@@ -773,13 +800,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdMarkupByPageIndex
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/page-dimensions:
     get:
       security:
       - BearerAuth: []
       description: Receive page dimensions for a document with optional pagination.
       tags:
-      - documents
+      - Documents
       summary: Get document page dimensions
       parameters:
       - description: Project UUID
@@ -829,13 +858,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPageDimensions
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/pages:
     get:
       security:
       - BearerAuth: []
       description: Receive a list of document pages with proper status and prediction structure.
       tags:
-      - documents
+      - Documents
       summary: Get document pages
       parameters:
       - description: Project UUID
@@ -895,13 +926,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPages
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/pages/{pageNum}:
     get:
       security:
       - BearerAuth: []
       description: Receive an individual document page with proper status and prediction structure.
       tags:
-      - documents
+      - Documents
       summary: Get document page
       parameters:
       - description: Project UUID
@@ -947,12 +980,13 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPagesByPageNum
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
-      description: Update validated document by page
       tags:
-      - documents
+      - Documents
       summary: Update validated document by page
       parameters:
       - description: Project UUID
@@ -1005,13 +1039,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPagesByPageNum
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/pages/{pageNum}/draft:
     put:
       security:
       - BearerAuth: []
-      description: Update draft document by page
       tags:
-      - documents
+      - Documents
       summary: Update draft document by page
       parameters:
       - description: Project UUID
@@ -1064,13 +1099,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPagesByPageNumDraft
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/pages/{pageNum}/validated:
     put:
       security:
       - BearerAuth: []
-      description: Load standard project validated document
       tags:
-      - documents
+      - Documents
       summary: Load standard project validated document
       parameters:
       - description: Project UUID
@@ -1118,13 +1154,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: putProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPagesByPageNumValidated
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/pdf-with-markups:
     get:
       security:
       - BearerAuth: []
       description: Generate a PDF document with embedded markups from all pages and return a presigned download link
       tags:
-      - documents
+      - Documents
       summary: Generate and download PDF with markups
       parameters:
       - description: Project UUID
@@ -1180,13 +1218,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdPdfWithMarkups
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/process:
     post:
       security:
       - BearerAuth: []
       description: Initiate processing on demand with changing document type and receive result data. Default removing just results after call.
       tags:
-      - documents
+      - Documents
       summary: On demand processing change document type
       parameters:
       - description: Project UUID
@@ -1251,13 +1291,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdProcess
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/status:
     get:
       security:
       - BearerAuth: []
       description: Retrieves the status of a specific document by ID for a specific use case within a standard project. Returns document metadata including page status, document type information, and processing status. This endpoint is used for standard projects (non-master projects) to fetch individual document information.
       tags:
-      - documents
+      - Documents
       summary: Get document status by ID for standard project
       parameters:
       - description: Standard project UUID (must not start with '00')
@@ -1297,13 +1339,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdStatus
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{documentId}/train:
     post:
       security:
       - BearerAuth: []
       description: Add a project document to the training data of the parent use case.
       tags:
-      - documents
+      - Documents
       summary: Add a project document to the training data of the parent use case
       parameters:
       - description: Project UUID
@@ -1345,13 +1389,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDocumentsByDocumentIdTrain
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/documents/{originalDocumentId}/download-original:
     get:
       security:
       - BearerAuth: []
       description: Returns a presigned download link for the original file stored in the originals folder on S3.
       tags:
-      - documents
+      - Documents
       summary: Download original document by original document ID
       parameters:
       - description: Project UUID
@@ -1391,13 +1437,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdDocumentsByOriginalDocumentIdDownloadOriginal
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/ducument_types/{documentTypeId}/samples/{sampleId}/copy:
     post:
       security:
       - BearerAuth: []
       description: Add a project document to the training data of the parent use case.
       tags:
-      - documents
+      - Documents
       summary: Add a project document to the training data of the parent use case
       parameters:
       - description: Project UUID
@@ -1452,13 +1500,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdDucumentTypesByDocumentTypeIdSamplesBySampleIdCopy
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/finish:
     post:
       security:
       - BearerAuth: []
       description: Finish document processing for all documents in a use case by validating all pages. This will copy draft files (if they exist) or result files to validated files, prioritizing user edits over AI results. Documents are processed in parallel using a goroutine pool.
       tags:
-      - documents
+      - Documents
       summary: Finish document processing for all documents in a use case
       parameters:
       - description: Project UUID
@@ -1492,13 +1542,15 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdFinish
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/status-list:
     post:
       security:
       - BearerAuth: []
       description: Return document loading and splitting status
       tags:
-      - documents
+      - Documents
       summary: Get document status list
       parameters:
       - description: Project UUID
@@ -1542,13 +1594,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postProjectsByProjectIdUseCasesByUseCaseIdStatusList
+      x-operation-id-source: derived
   /projects/{projectId}/use-cases/{useCaseId}/{fileId}/status:
     get:
       security:
       - BearerAuth: []
       description: Return document loading and splitting status
       tags:
-      - documents
+      - Documents
       summary: Get document status
       parameters:
       - description: Project UUID
@@ -1594,8 +1648,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getProjectsByProjectIdUseCasesByUseCaseIdByFileIdStatus
+      x-operation-id-source: derived
 components:
   schemas:
+    conxai_com_docs-api_api_shared_handlers.StatusOkStruct:
+      type: object
+      properties:
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.PagePredictions:
+      type: object
+      properties:
+        bboxes:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxesByPage'
+        data:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
+    conxai_com_docs-api_structures_api.PutDocumentValidated:
+      type: object
+    api_documents_handlers.MultiFileStatusRequest:
+      type: object
+      properties:
+        file_id:
+          type: array
+          items:
+            type: string
+    conxai_com_docs-api_structures_api.PageDimension:
+      type: object
+      properties:
+        height:
+          type: integer
+        width:
+          type: integer
+    conxai_com_docs-api_structures_api.PostUseCaseFinishProcessingResponse:
+      type: object
+      properties:
+        error_count:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+        success_count:
+          type: integer
+        total_count:
+          type: integer
+    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
+        original_document_id:
+          type: string
+        pages:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+    conxai_com_docs-api_structures_api.BBoxesByPage:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBox'
+    conxai_com_docs-api_structures_api.PredictionsStructure:
+      type: object
+      properties:
+        document_type:
+          type: string
+        use_case:
+          type: string
+        version:
+          type: integer
+    conxai_com_docs-api_structures_api.PageDimensions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimension'
+    conxai_com_docs-api_structures_sample.Status:
+      type: string
+      enum:
+      - processing
+      - ready
+      - validated
+      - error
+      x-enum-varnames:
+      - StatusProcessing
+      - StatusReady
+      - StatusValidated
+      - StatusError
+    conxai_com_docs-api_structures_api.PageTableRow:
+      type: object
+      additionalProperties: {}
     conxai_com_docs-api_structures_api.PageData:
       type: object
       properties:
@@ -1615,112 +1763,16 @@ components:
           type: integer
         status:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
-    conxai_com_docs-api_structures_api.CreateDocumentResponse:
+    conxai_com_docs-api_structures_api.DocumentsPageStatus:
       type: object
       properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
-        id:
-          type: string
-        status:
-          type: string
-        url:
-          type: string
-    conxai_com_docs-api_structures_api.GetDocumentStatus:
-      type: object
-      properties:
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.BBox:
-      type: object
-      properties:
-        coordinates:
-          type: array
-          items:
-            type: number
-        id:
-          type: string
-    api_documents_handlers.CopyToProjectRequest:
-      type: object
-      properties:
-        project_id:
-          type: string
-    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
-      type: object
-      properties:
-        document_type:
-          type: string
-        pages:
-          type: array
-          items:
-            type: integer
-    api_documents_handlers.FileStatus:
-      type: object
-      properties:
-        document_ids:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-        file_id:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.BulkDocumentOperationStatus:
-      type: object
-      properties:
-        message:
-          type: string
-          example: failed to delete S3 files
-        status:
-          type: string
-          example: deleted
-    conxai_com_docs-api_structures_api.Document:
-      type: object
-      properties:
-        page_count:
-          type: array
-          items:
-            type: integer
-        uuid:
-          type: string
-    conxai_com_docs-api_structures_api.PredictionsStructure:
-      type: object
-      properties:
-        document_type:
-          type: string
-        use_case:
-          type: string
-        version:
+        page:
           type: integer
-    conxai_com_docs-api_structures_api.DocumentPage:
-      type: object
-      properties:
-        content:
-          type: string
-        id:
-          type: string
-        image:
-          type: string
-        image_high:
-          type: string
-        image_low:
-          type: string
-        ocr:
-          type: string
-        predictions: {}
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-            version:
-              type: string
+          example: 0
         status:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+          allOf:
+          - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+          example: validated
     conxai_com_docs-api_structures_api.BulkDocumentRequest:
       type: object
       properties:
@@ -1731,106 +1783,6 @@ components:
           example:
           - '["a1b2c3d4-e5f6-7890-abcd-ef1234567890"'
           - '"b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
-    api_documents_handlers.MultiFileStatusRequest:
-      type: object
-      properties:
-        file_id:
-          type: array
-          items:
-            type: string
-    conxai_com_docs-api_structures_api.GetDocumentPagesResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        page_count:
-          type: integer
-        pages:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageData'
-        predictions:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PagePredictions'
-        status:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
-    conxai_com_docs-api_structures_api.DownloadLinkResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        original_url:
-          type: string
-        pdf_url:
-          type: string
-    conxai_com_docs-api_structures_api.BBoxesByPage:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBox'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
-      type: object
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
-        original_document_id:
-          type: string
-        pages:
-          type: array
-          items:
-            type: array
-            items:
-              type: integer
-    conxai_com_docs-api_structures_api.PutDocumentValidated:
-      type: object
-    conxai_com_docs-api_structures_api.PageDimension:
-      type: object
-      properties:
-        height:
-          type: integer
-        width:
-          type: integer
-    conxai_com_docs-api_structures_api.ProcessingStatus:
-      type: object
-      properties:
-        completion_percentage:
-          description: extractor_pages / page_count
-          type: number
-          example: 0.8
-        extractor_pages:
-          description: max is number of pages
-          type: integer
-          example: 1
-        preprocessing_completion_percentage:
-          description: (splitter + prerunner) / (2*page_count)
-          type: number
-          example: 0.6
-        prerunner_pages:
-          description: max is number of pages
-          type: integer
-          example: 8
-        splitter_pages:
-          description: max is number of pages
-          type: integer
-          example: 4
-    conxai_com_docs-api_structures_api.GetPageDimensionsResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        page_count:
-          type: integer
-        page_dimensions:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimensions'
     conxai_com_docs-api_structures_api.Documents:
       type: object
       properties:
@@ -1881,41 +1833,71 @@ components:
         validation_status:
           type: integer
           example: 0
-    conxai_com_docs-api_structures_api.PagePredictions:
+    conxai_com_docs-api_structures_api.DocumentPage:
       type: object
       properties:
-        bboxes:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxesByPage'
-        data:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
-        structure:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
-    conxai_com_docs-api_structures_api.DocumentsPageStatus:
-      type: object
-      properties:
-        page:
-          type: integer
-          example: 0
+        content:
+          type: string
+        id:
+          type: string
+        image:
+          type: string
+        image_high:
+          type: string
+        image_low:
+          type: string
+        ocr:
+          type: string
+        predictions: {}
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            version:
+              type: string
         status:
-          allOf:
-          - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
-          example: validated
-    conxai_com_docs-api_structures_api.PostUseCaseFinishProcessingResponse:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.ProcessingStatus:
       type: object
       properties:
-        error_count:
+        completion_percentage:
+          description: extractor_pages / page_count
+          type: number
+          example: 0.8
+        extractor_pages:
+          description: max is number of pages
           type: integer
-        errors:
+          example: 1
+        preprocessing_completion_percentage:
+          description: (splitter + prerunner) / (2*page_count)
+          type: number
+          example: 0.6
+        prerunner_pages:
+          description: max is number of pages
+          type: integer
+          example: 8
+        splitter_pages:
+          description: max is number of pages
+          type: integer
+          example: 4
+    conxai_com_docs-api_structures_api.OnDemandResult:
+      type: object
+    conxai_com_docs-api_structures_api.GetDocumentPagesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        page_count:
+          type: integer
+        pages:
           type: array
           items:
-            type: string
-        success_count:
-          type: integer
-        total_count:
-          type: integer
-    conxai_com_docs-api_structures_api.PageTableRow:
-      type: object
-      additionalProperties: {}
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageData'
+        predictions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PagePredictions'
+        status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
     conxai_com_docs-api_structures_api.BBoxData:
       type: object
       properties:
@@ -1925,20 +1907,24 @@ components:
             type: number
         id:
           type: string
-    conxai_com_docs-api_structures_api.OnDemandResult:
+    conxai_com_docs-api_structures_api.GetPageDimensionsResponse:
       type: object
-    conxai_com_docs-api_structures_sample.Status:
-      type: string
-      enum:
-      - processing
-      - ready
-      - validated
-      - error
-      x-enum-varnames:
-      - StatusProcessing
-      - StatusReady
-      - StatusValidated
-      - StatusError
+      properties:
+        id:
+          type: string
+        page_count:
+          type: integer
+        page_dimensions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimensions'
+    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
+      type: object
+      properties:
+        document_type:
+          type: string
+        pages:
+          type: array
+          items:
+            type: integer
     conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
       type: object
       properties:
@@ -1956,37 +1942,86 @@ components:
               $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
         structure:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
-    conxai_com_docs-api_api_shared_handlers.StatusOkStruct:
+    api_documents_handlers.CopyToProjectRequest:
+      type: object
+      properties:
+        project_id:
+          type: string
+    conxai_com_docs-api_structures_api.BBox:
+      type: object
+      properties:
+        coordinates:
+          type: array
+          items:
+            type: number
+        id:
+          type: string
+    conxai_com_docs-api_structures_api.Document:
+      type: object
+      properties:
+        page_count:
+          type: array
+          items:
+            type: integer
+        uuid:
+          type: string
+    conxai_com_docs-api_structures_api.DownloadLinkResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        original_url:
+          type: string
+        pdf_url:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.BulkDocumentOperationStatus:
+      type: object
+      properties:
+        message:
+          type: string
+          example: failed to delete S3 files
+        status:
+          type: string
+          example: deleted
+    conxai_com_docs-api_structures_api.GetDocumentStatus:
       type: object
       properties:
         status:
           type: string
-    conxai_com_docs-api_structures_api.PageDimensions:
+    conxai_com_docs-api_structures_api.CreateDocumentResponse:
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimension'
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
+        id:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+    api_documents_handlers.FileStatus:
+      type: object
+      properties:
+        document_ids:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+        file_id:
+          type: string
+        status:
+          type: string
   requestBodies:
-    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OnDemandProcessingRequest'
-      description: On demand request body
-      required: true
-    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
-      description: Validated document request body
-      required: true
-    conxai_com_docs-api_structures_api.PutDocumentValidated:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PutDocumentValidated'
-      description: Validated document request body
-      required: true
     Request:
       content:
         application/json:
@@ -1995,12 +2030,19 @@ components:
             additionalProperties: true
       description: Markup request body
       required: true
-    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
+    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostCreateDocumentRequest'
-      description: Create document request body
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
+      description: Validated document request body
+      required: true
+    conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.OnDemandProcessingRequest'
+      description: On demand request body
       required: true
     api_documents_handlers.MultiFileStatusRequest:
       content:
@@ -2009,12 +2051,28 @@ components:
             $ref: '#/components/schemas/api_documents_handlers.MultiFileStatusRequest'
       description: File id list string request body
       required: true
+    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostCreateDocumentRequest'
+      description: Create document request body
+      required: true
+    conxai_com_docs-api_structures_api.PutDocumentValidated:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PutDocumentValidated'
+      description: Validated document request body
+      required: true
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
       type: apiKey
       name: X-Api-Key
       in: header
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
+    BearerAuth:
+      description: Provide the JWT token in the Authorization header prefixed with "Bearer"
+      type: apiKey
+      name: Authorization
+      in: header
