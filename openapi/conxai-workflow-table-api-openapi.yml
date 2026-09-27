@@ -159,50 +159,11 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_structures_api.SummaryTableDataResponse:
+    conxai_com_docs-api_structures_api.SummaryTableDataStructure:
       type: object
       properties:
-        created_at:
+        use_case:
           type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableRow'
-        structure:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataStructure'
-    conxai_com_docs-api_structures_api.SummaryTableRow:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
-    fiber.Map:
-      type: object
-      additionalProperties: true
-    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
-    conxai_com_docs-api_structures_api.SummaryTableCell:
-      type: object
-      properties:
-        is_applicable: {}
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessage'
-        value: {}
-    conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
-      type: string
-      enum:
-      - success
-      - warning
-      - error
-      x-enum-varnames:
-      - SummaryTableCellMessageTypeSuccess
-      - SummaryTableCellMessageTypeWarning
-      - SummaryTableCellMessageTypeError
     conxai_com_docs-api_structures_api.WorkflowProcessingStatusResponse:
       type: object
       properties:
@@ -216,11 +177,50 @@ components:
           - completed
           allOf:
           - $ref: '#/components/schemas/conxai_com_docs-api_structures_api.WorkflowProcessingStatus'
-    conxai_com_docs-api_structures_api.SummaryTableDataStructure:
+    conxai_com_docs-api_structures_api.SummaryTableCell:
       type: object
       properties:
-        use_case:
+        is_applicable: {}
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessage'
+        value: {}
+    conxai_com_docs-api_structures_api.SummaryTableRow:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
+    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
+      type: object
+      properties:
+        message:
           type: string
+        type:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    conxai_com_docs-api_structures_api.SummaryTableDataResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataStructure'
+    conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
+      type: string
+      enum:
+      - success
+      - warning
+      - error
+      x-enum-varnames:
+      - SummaryTableCellMessageTypeSuccess
+      - SummaryTableCellMessageTypeWarning
+      - SummaryTableCellMessageTypeError
     conxai_com_docs-api_structures_api.WorkflowProcessingStatus:
       type: string
       enum:

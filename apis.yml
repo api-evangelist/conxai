@@ -51,15 +51,18 @@ x-tier-reason: portfolio-lead
 specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-18'
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-24
 tags:
 - Company
 - Construction
 - AEC
 - Artificial Intelligence
 - Document Processing
-- Computer-Vision
-- Agentic AI
-- Machine-Learning
+- Computer Vision
+- AI Agents
+- Machine Learning
 tags_raw:
 - Company
 - Construction
@@ -69,9 +72,11 @@ tags_raw:
 - Computer Vision
 - Agentic AI
 - Machine Learning
+- Computer-Vision
+- Machine-Learning
 apis:
 - aid: conxai:conxai-annotations-api
-  name: Conxai annotations API
+  name: Conxai Annotations API
   description: The annotations API from Conxai — 1 operation(s) for annotations.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -93,7 +98,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-camera-api
-  name: Conxai camera API
+  name: Conxai Camera API
   description: The camera API from Conxai — 4 operation(s) for camera.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -115,7 +120,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-document-types-api
-  name: Conxai document-types API
+  name: Conxai Document Types API
   description: The document-types API from Conxai — 4 operation(s) for document-types.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -137,7 +142,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-documents-api
-  name: Conxai documents API
+  name: Conxai Documents API
   description: The documents API from Conxai — 26 operation(s) for documents.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -159,7 +164,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-exports-api
-  name: Conxai exports API
+  name: Conxai Exports API
   description: The exports API from Conxai — 2 operation(s) for exports.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -203,7 +208,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-integrations-api
-  name: Conxai integrations API
+  name: Conxai Integrations API
   description: The integrations API from Conxai — 5 operation(s) for integrations.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -225,7 +230,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-production-tracking-api
-  name: Conxai production_tracking API
+  name: Conxai Production Tracking API
   description: The production_tracking API from Conxai — 4 operation(s) for production_tracking.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -247,7 +252,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-project-api
-  name: Conxai project API
+  name: Conxai Project API
   description: The project API from Conxai — 5 operation(s) for project.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -269,7 +274,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-projects-api
-  name: Conxai projects API
+  name: Conxai Projects API
   description: The projects API from Conxai — 2 operation(s) for projects.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -291,7 +296,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-samples-api
-  name: Conxai samples API
+  name: Conxai Samples API
   description: The samples API from Conxai — 16 operation(s) for samples.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -313,7 +318,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-schema-api
-  name: Conxai schema API
+  name: Conxai Schema API
   description: The schema API from Conxai — 1 operation(s) for schema.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -335,7 +340,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-summary-table-api
-  name: Conxai summary-table API
+  name: Conxai Summary Table API
   description: The summary-table API from Conxai — 12 operation(s) for summary-table.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -355,7 +360,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-use-cases-api
-  name: Conxai use-cases API
+  name: Conxai Use Cases API
   description: The use-cases API from Conxai — 6 operation(s) for use-cases.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -377,7 +382,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-users-api
-  name: Conxai users API
+  name: Conxai Users API
   description: The users API from Conxai — 3 operation(s) for users.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -399,7 +404,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-workflow-api
-  name: Conxai workflow API
+  name: Conxai Workflow API
   description: The workflow API from Conxai — 3 operation(s) for workflow.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai
@@ -421,7 +426,7 @@ apis:
   - type: APIReference
     url: https://conxai.readme.io/reference/get_weather-1
 - aid: conxai:conxai-workflow-table-api
-  name: Conxai workflow-table API
+  name: Conxai Workflow Table API
   description: The workflow-table API from Conxai — 3 operation(s) for workflow-table.
   humanURL: https://conxai.readme.io/reference/sitelens-integration-steps
   baseURL: https://customer.conxai.ai

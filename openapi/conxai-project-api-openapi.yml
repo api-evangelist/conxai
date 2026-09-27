@@ -227,6 +227,25 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    transformers.ProjectSettings:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/transformers.ProjectLocation'
+        start_date:
+          type: string
+    transformers.ProjectLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
+          type: string
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
     ProjectResponse:
       type: object
       properties:
@@ -250,12 +269,12 @@ components:
         uuid:
           description: Uniq project id
           type: string
-    transformers.ProjectSettings:
+    ErrorResponse:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/transformers.ProjectLocation'
-        start_date:
+        error:
+          type: string
+        status:
           type: string
     ProjectRequest:
       type: object
@@ -269,6 +288,35 @@ components:
         settings:
           $ref: '#/components/schemas/transformers.ProjectSettings'
         uuid:
+          description: Uniq project id
+          type: string
+    transformers.Feature:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        key:
+          type: string
+    ProjectFeaturesResponse:
+      type: object
+      properties:
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformers.Feature'
+        id:
+          type: integer
+        project_id:
+          type: string
+    FeaturesRequest:
+      type: object
+      properties:
+        features:
+          description: New Features to update
+          type: array
+          items:
+            type: string
+        project_id:
           description: Uniq project id
           type: string
     transformers.ProjectRequest:
@@ -287,54 +335,6 @@ components:
           description: Project settings
           allOf:
           - $ref: '#/components/schemas/transformers.ProjectSettings'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    transformers.Feature:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        key:
-          type: string
-    FeaturesRequest:
-      type: object
-      properties:
-        features:
-          description: New Features to update
-          type: array
-          items:
-            type: string
-        project_id:
-          description: Uniq project id
-          type: string
-    transformers.ProjectLocation:
-      type: object
-      properties:
-        lat:
-          type: number
-        long:
-          type: number
-        name:
-          type: string
-        timezone_name:
-          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          type: string
-    ProjectFeaturesResponse:
-      type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/transformers.Feature'
-        id:
-          type: integer
-        project_id:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key

@@ -176,6 +176,11 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    conxai_com_docs-api_structures_api.ZendeskJWTResponse:
+      type: object
+      properties:
+        token:
+          type: string
     conxai_com_docs-api_structures_api.ZendeskErrorResponse:
       type: object
       properties:
@@ -185,11 +190,6 @@ components:
       type: object
       properties:
         code:
-          type: string
-    conxai_com_docs-api_structures_api.BoxErrorResponse:
-      type: object
-      properties:
-        error:
           type: string
     conxai_com_docs-api_structures_api.BoxTokenResponse:
       type: object
@@ -201,15 +201,15 @@ components:
           type: integer
         is_connected:
           type: boolean
-    conxai_com_docs-api_structures_api.ZendeskJWTResponse:
-      type: object
-      properties:
-        token:
-          type: string
     conxai_com_docs-api_structures_api.BoxRevokeResponse:
       type: object
       properties:
         message:
+          type: string
+    conxai_com_docs-api_structures_api.BoxErrorResponse:
+      type: object
+      properties:
+        error:
           type: string
     conxai_com_docs-api_structures_api.BoxTokenStatusResponse:
       type: object

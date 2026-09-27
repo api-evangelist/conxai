@@ -128,41 +128,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+    conxai_com_docs-api_platform_s2s.ProjectSettings:
       type: object
       properties:
-        master_id:
+        end_date:
+          description: should be in RFC3339 format
           type: string
-        use_case_id:
-          type: string
-    api_projects_handlers.ProjectRequestBody:
-      type: object
-      properties:
         location:
-          type: string
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectLocation'
         metadata:
           type: object
           additionalProperties:
             type: string
-        name:
+        start_date:
+          description: should be in RFC3339 format
           type: string
-        type:
-          $ref: '#/components/schemas/api_projects_handlers.Type'
-    conxai_com_docs-api_platform_s2s.ProjectLocation:
+    ErrorResponse:
       type: object
       properties:
-        lat:
-          type: number
-        long:
-          type: number
-        name:
+        error:
           type: string
-        timezone_name:
-          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        status:
           type: string
-    fiber.Map:
-      type: object
-      additionalProperties: true
     conxai_com_docs-api_structures_api.ProjectWithUseCases:
       type: object
       properties:
@@ -188,22 +175,17 @@ components:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
         uuid:
           type: string
-    api_projects_handlers.Type:
-      type: string
-      enum:
-      - master
-      - standard
-      - test
-      x-enum-varnames:
-      - Master
-      - Standard
-      - Test
-    ErrorResponse:
+    conxai_com_docs-api_platform_s2s.ProjectLocation:
       type: object
       properties:
-        error:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
           type: string
-        status:
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
     conxai_com_docs-api_platform_s2s.ProjectResponse:
       type: object
@@ -226,21 +208,39 @@ components:
           type: string
         uuid:
           type: string
-    conxai_com_docs-api_platform_s2s.ProjectSettings:
+    api_projects_handlers.ProjectRequestBody:
       type: object
       properties:
-        end_date:
-          description: should be in RFC3339 format
-          type: string
         location:
-          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectLocation'
+          type: string
         metadata:
           type: object
           additionalProperties:
             type: string
-        start_date:
-          description: should be in RFC3339 format
+        name:
           type: string
+        type:
+          $ref: '#/components/schemas/api_projects_handlers.Type'
+    api_projects_handlers.Type:
+      type: string
+      enum:
+      - master
+      - standard
+      - test
+      x-enum-varnames:
+      - Master
+      - Standard
+      - Test
+    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+      type: object
+      properties:
+        master_id:
+          type: string
+        use_case_id:
+          type: string
+    fiber.Map:
+      type: object
+      additionalProperties: true
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key

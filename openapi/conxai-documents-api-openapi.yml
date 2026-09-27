@@ -1652,70 +1652,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_api_shared_handlers.StatusOkStruct:
-      type: object
-      properties:
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.PagePredictions:
-      type: object
-      properties:
-        bboxes:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxesByPage'
-        data:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
-        structure:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
-    conxai_com_docs-api_structures_api.PutDocumentValidated:
-      type: object
-    api_documents_handlers.MultiFileStatusRequest:
-      type: object
-      properties:
-        file_id:
-          type: array
-          items:
-            type: string
-    conxai_com_docs-api_structures_api.PageDimension:
-      type: object
-      properties:
-        height:
-          type: integer
-        width:
-          type: integer
-    conxai_com_docs-api_structures_api.PostUseCaseFinishProcessingResponse:
-      type: object
-      properties:
-        error_count:
-          type: integer
-        errors:
-          type: array
-          items:
-            type: string
-        success_count:
-          type: integer
-        total_count:
-          type: integer
-    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
-      type: object
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
-        original_document_id:
-          type: string
-        pages:
-          type: array
-          items:
-            type: array
-            items:
-              type: integer
-    conxai_com_docs-api_structures_api.BBoxesByPage:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBox'
     conxai_com_docs-api_structures_api.PredictionsStructure:
       type: object
       properties:
@@ -1725,25 +1661,51 @@ components:
           type: string
         version:
           type: integer
-    conxai_com_docs-api_structures_api.PageDimensions:
+    conxai_com_docs-api_structures_api.GetPageDimensionsResponse:
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimension'
-    conxai_com_docs-api_structures_sample.Status:
-      type: string
-      enum:
-      - processing
-      - ready
-      - validated
-      - error
-      x-enum-varnames:
-      - StatusProcessing
-      - StatusReady
-      - StatusValidated
-      - StatusError
+      properties:
+        id:
+          type: string
+        page_count:
+          type: integer
+        page_dimensions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimensions'
+    conxai_com_docs-api_structures_api.BulkDocumentRequest:
+      type: object
+      properties:
+        document_ids:
+          type: array
+          items:
+            type: string
+          example:
+          - '["a1b2c3d4-e5f6-7890-abcd-ef1234567890"'
+          - '"b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
+    conxai_com_docs-api_structures_api.PagePredictions:
+      type: object
+      properties:
+        bboxes:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBoxesByPage'
+        data:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
+        structure:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
     conxai_com_docs-api_structures_api.PageTableRow:
       type: object
       additionalProperties: {}
+    conxai_com_docs-api_api_shared_handlers.StatusOkStruct:
+      type: object
+      properties:
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.BulkDocumentOperationStatus:
+      type: object
+      properties:
+        message:
+          type: string
+          example: failed to delete S3 files
+        status:
+          type: string
+          example: deleted
     conxai_com_docs-api_structures_api.PageData:
       type: object
       properties:
@@ -1763,6 +1725,44 @@ components:
           type: integer
         status:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.DocumentPage:
+      type: object
+      properties:
+        content:
+          type: string
+        id:
+          type: string
+        image:
+          type: string
+        image_high:
+          type: string
+        image_low:
+          type: string
+        ocr:
+          type: string
+        predictions: {}
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            version:
+              type: string
+        status:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
+    conxai_com_docs-api_structures_api.CreateDocumentResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
+        id:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
     conxai_com_docs-api_structures_api.DocumentsPageStatus:
       type: object
       properties:
@@ -1773,16 +1773,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
           example: validated
-    conxai_com_docs-api_structures_api.BulkDocumentRequest:
+    conxai_com_docs-api_structures_api.BBoxesByPage:
       type: object
-      properties:
-        document_ids:
-          type: array
-          items:
-            type: string
-          example:
-          - '["a1b2c3d4-e5f6-7890-abcd-ef1234567890"'
-          - '"b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.BBox'
     conxai_com_docs-api_structures_api.Documents:
       type: object
       properties:
@@ -1833,29 +1829,44 @@ components:
         validation_status:
           type: integer
           example: 0
-    conxai_com_docs-api_structures_api.DocumentPage:
+    api_documents_handlers.FileStatus:
       type: object
       properties:
-        content:
+        document_ids:
+          type: array
+          items:
+            type: string
+        error:
           type: string
+        file_id:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_sample.Status:
+      type: string
+      enum:
+      - processing
+      - ready
+      - validated
+      - error
+      x-enum-varnames:
+      - StatusProcessing
+      - StatusReady
+      - StatusValidated
+      - StatusError
+    conxai_com_docs-api_structures_api.GetDocumentPagesResponse:
+      type: object
+      properties:
         id:
           type: string
-        image:
-          type: string
-        image_high:
-          type: string
-        image_low:
-          type: string
-        ocr:
-          type: string
-        predictions: {}
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-            version:
-              type: string
+        page_count:
+          type: integer
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageData'
+        predictions:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PagePredictions'
         status:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
     conxai_com_docs-api_structures_api.ProcessingStatus:
@@ -1881,24 +1892,14 @@ components:
           description: max is number of pages
           type: integer
           example: 4
-    conxai_com_docs-api_structures_api.OnDemandResult:
-      type: object
-    conxai_com_docs-api_structures_api.GetDocumentPagesResponse:
+    conxai_com_docs-api_structures_api.PageDimension:
       type: object
       properties:
-        id:
-          type: string
-        page_count:
+        height:
           type: integer
-        pages:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageData'
-        predictions:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PagePredictions'
-        status:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_sample.Status'
-    conxai_com_docs-api_structures_api.BBoxData:
+        width:
+          type: integer
+    conxai_com_docs-api_structures_api.BBox:
       type: object
       properties:
         coordinates:
@@ -1907,15 +1908,13 @@ components:
             type: number
         id:
           type: string
-    conxai_com_docs-api_structures_api.GetPageDimensionsResponse:
+    api_documents_handlers.MultiFileStatusRequest:
       type: object
       properties:
-        id:
-          type: string
-        page_count:
-          type: integer
-        page_dimensions:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimensions'
+        file_id:
+          type: array
+          items:
+            type: string
     conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
       type: object
       properties:
@@ -1925,6 +1924,52 @@ components:
           type: array
           items:
             type: integer
+    conxai_com_docs-api_structures_api.OnDemandResult:
+      type: object
+    conxai_com_docs-api_structures_api.DownloadLinkResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        original_url:
+          type: string
+        pdf_url:
+          type: string
+    conxai_com_docs-api_structures_api.GetDocumentStatus:
+      type: object
+      properties:
+        status:
+          type: string
+    api_documents_handlers.CopyToProjectRequest:
+      type: object
+      properties:
+        project_id:
+          type: string
+    conxai_com_docs-api_structures_api.BBoxData:
+      type: object
+      properties:
+        coordinates:
+          type: array
+          items:
+            type: number
+        id:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.Document:
+      type: object
+      properties:
+        page_count:
+          type: array
+          items:
+            type: integer
+        uuid:
+          type: string
     conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
       type: object
       properties:
@@ -1942,100 +1987,54 @@ components:
               $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageTableRow'
         structure:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PredictionsStructure'
-    api_documents_handlers.CopyToProjectRequest:
+    conxai_com_docs-api_structures_api.PutDocumentValidated:
       type: object
-      properties:
-        project_id:
-          type: string
-    conxai_com_docs-api_structures_api.BBox:
-      type: object
-      properties:
-        coordinates:
-          type: array
-          items:
-            type: number
-        id:
-          type: string
-    conxai_com_docs-api_structures_api.Document:
-      type: object
-      properties:
-        page_count:
-          type: array
-          items:
-            type: integer
-        uuid:
-          type: string
-    conxai_com_docs-api_structures_api.DownloadLinkResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        original_url:
-          type: string
-        pdf_url:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.BulkDocumentOperationStatus:
-      type: object
-      properties:
-        message:
-          type: string
-          example: failed to delete S3 files
-        status:
-          type: string
-          example: deleted
-    conxai_com_docs-api_structures_api.GetDocumentStatus:
-      type: object
-      properties:
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.CreateDocumentResponse:
+    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
       type: object
       properties:
         documents:
           type: array
           items:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.Document'
-        id:
+        original_document_id:
           type: string
-        status:
-          type: string
-        url:
-          type: string
-    api_documents_handlers.FileStatus:
+        pages:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+    conxai_com_docs-api_structures_api.PostUseCaseFinishProcessingResponse:
       type: object
       properties:
-        document_ids:
+        error_count:
+          type: integer
+        errors:
           type: array
           items:
             type: string
-        error:
-          type: string
-        file_id:
-          type: string
-        status:
-          type: string
+        success_count:
+          type: integer
+        total_count:
+          type: integer
+    conxai_com_docs-api_structures_api.PageDimensions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PageDimension'
   requestBodies:
-    Request:
+    conxai_com_docs-api_structures_api.PutDocumentValidated:
       content:
         application/json:
           schema:
-            type: object
-            additionalProperties: true
-      description: Markup request body
-      required: true
-    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PutDocumentValidated'
       description: Validated document request body
+      required: true
+    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostCreateDocumentRequest'
+      description: Create document request body
       required: true
     conxai_com_docs-api_structures_api.OnDemandProcessingRequest:
       content:
@@ -2051,19 +2050,20 @@ components:
             $ref: '#/components/schemas/api_documents_handlers.MultiFileStatusRequest'
       description: File id list string request body
       required: true
-    conxai_com_docs-api_structures_api.PostCreateDocumentRequest:
+    conxai_com_docs-api_structures_api.ValidatedPageTableRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostCreateDocumentRequest'
-      description: Create document request body
-      required: true
-    conxai_com_docs-api_structures_api.PutDocumentValidated:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PutDocumentValidated'
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.ValidatedPageTableRequest'
       description: Validated document request body
+      required: true
+    Request:
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+      description: Markup request body
       required: true
   securitySchemes:
     ApiKeyAuth:

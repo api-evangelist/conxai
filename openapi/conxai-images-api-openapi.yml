@@ -158,16 +158,6 @@ components:
         status:
           type: string
       type: object
-    clients.SuccessResponse:
-      properties:
-        image_id:
-          format: uuid
-          type: string
-        status:
-          type: string
-        url:
-          type: string
-      type: object
     clients.RLEMask:
       properties:
         count:
@@ -180,6 +170,16 @@ components:
           items:
             type: integer
           type: array
+      type: object
+    clients.SuccessResponse:
+      properties:
+        image_id:
+          format: uuid
+          type: string
+        status:
+          type: string
+        url:
+          type: string
       type: object
     clients.SolutionResponse:
       properties:

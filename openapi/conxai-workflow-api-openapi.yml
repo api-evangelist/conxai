@@ -167,6 +167,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
     conxai_com_docs-api_structures_api.WorkflowContextDocumentResponse:
       type: object
       properties:
@@ -180,13 +187,6 @@ components:
       type: object
       properties:
         file_name:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
           type: string
     conxai_com_docs-api_structures_api.WorkflowContextDocumentListItem:
       type: object

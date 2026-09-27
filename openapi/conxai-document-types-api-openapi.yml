@@ -257,24 +257,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    fiber.Map:
-      type: object
-      additionalProperties: true
-    conxai_com_docs-api_structures_api.DocumentTypeResponse:
+    api_document_types_handlers.GetDocumentTypeOne:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
+        samples_number:
+          type: integer
         version:
-          type: string
-    conxai_com_docs-api_structures_api.DocumentTypeRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
           type: string
     ErrorResponse:
       type: object
@@ -292,17 +284,25 @@ components:
           type: string
         version:
           type: integer
-    api_document_types_handlers.GetDocumentTypeOne:
+    conxai_com_docs-api_structures_api.DocumentTypeRequest:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        samples_number:
-          type: integer
+    conxai_com_docs-api_structures_api.DocumentTypeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
         version:
           type: string
+    fiber.Map:
+      type: object
+      additionalProperties: true
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
