@@ -128,53 +128,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_platform_s2s.ProjectSettings:
-      type: object
-      properties:
-        end_date:
-          description: should be in RFC3339 format
-          type: string
-        location:
-          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectLocation'
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        start_date:
-          description: should be in RFC3339 format
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.ProjectWithUseCases:
-      type: object
-      properties:
-        created_at:
-          type: string
-        created_by:
-          type: string
-        created_by_email:
-          type: string
-        external_id:
-          type: string
-        image_cover:
-          type: string
-        name:
-          type: string
-        settings:
-          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
-        updated_at:
-          type: string
-        use_cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
-        uuid:
-          type: string
     conxai_com_docs-api_platform_s2s.ProjectLocation:
       type: object
       properties:
@@ -187,6 +140,19 @@ components:
         timezone_name:
           description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    api_projects_handlers.Type:
+      type: string
+      enum:
+      - master
+      - standard
+      - test
+      x-enum-varnames:
+      - Master
+      - Standard
+      - Test
     conxai_com_docs-api_platform_s2s.ProjectResponse:
       type: object
       properties:
@@ -221,16 +187,38 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/api_projects_handlers.Type'
-    api_projects_handlers.Type:
-      type: string
-      enum:
-      - master
-      - standard
-      - test
-      x-enum-varnames:
-      - Master
-      - Standard
-      - Test
+    conxai_com_docs-api_structures_api.ProjectWithUseCases:
+      type: object
+      properties:
+        created_at:
+          type: string
+        created_by:
+          type: string
+        created_by_email:
+          type: string
+        external_id:
+          type: string
+        image_cover:
+          type: string
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectSettings'
+        updated_at:
+          type: string
+        use_cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.UseCaseLinkToProject'
+        uuid:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
     conxai_com_docs-api_structures_api.UseCaseLinkToProject:
       type: object
       properties:
@@ -238,9 +226,21 @@ components:
           type: string
         use_case_id:
           type: string
-    fiber.Map:
+    conxai_com_docs-api_platform_s2s.ProjectSettings:
       type: object
-      additionalProperties: true
+      properties:
+        end_date:
+          description: should be in RFC3339 format
+          type: string
+        location:
+          $ref: '#/components/schemas/conxai_com_docs-api_platform_s2s.ProjectLocation'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        start_date:
+          description: should be in RFC3339 format
+          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key

@@ -155,13 +155,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
     api_handlers.CameraResponse:
       type: object
       properties:
@@ -177,18 +170,6 @@ components:
         uuid:
           description: Uniq camera id
           type: string
-    api_handlers.CameraRequest:
-      type: object
-      properties:
-        external_id:
-          description: Camera external id
-          type: string
-        name:
-          description: Camera name
-          type: string
-        project_uuid:
-          description: Project uuid
-          type: string
     transformers.CameraInfoResponse:
       type: object
       properties:
@@ -201,6 +182,25 @@ components:
         project_internal_id:
           type: string
         project_timezone:
+          type: string
+    api_handlers.CameraRequest:
+      type: object
+      properties:
+        external_id:
+          description: Camera external id
+          type: string
+        name:
+          description: Camera name
+          type: string
+        project_uuid:
+          description: Project uuid
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
           type: string
     transformers.CameraByProjectId:
       type: object

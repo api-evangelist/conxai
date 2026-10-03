@@ -304,14 +304,18 @@ paths:
       operationId: getUseCases
       x-operation-id-source: derived
 components:
+  requestBodies:
+    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseRequest'
+      description: Use case request body
+      required: true
   schemas:
-    ErrorResponse:
+    fiber.Map:
       type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
+      additionalProperties: true
     conxai_com_docs-api_structures_api.OneUseCaseResponse:
       type: object
       properties:
@@ -345,21 +349,12 @@ components:
           type: string
         summary_table_workflow_schema_version:
           type: string
-    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+    conxai_com_docs-api_structures_api.LinkedProject:
       type: object
-      required:
-      - name
       properties:
-        description:
+        id:
           type: string
         name:
-          type: string
-    conxai_com_docs-api_structures_api.ExportType:
-      type: object
-      properties:
-        title:
-          type: string
-        type:
           type: string
     api_use_cases_handlers.CloneUseCaseRequest:
       type: object
@@ -382,17 +377,24 @@ components:
           description: Human-readable name for the new cloned use case
           type: string
           example: Selling cars NEW
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
     conxai_com_docs-api_structures_api.PostUseCaseResponse:
       type: object
       properties:
         id:
           type: string
-    conxai_com_docs-api_structures_api.LinkedProject:
+    conxai_com_docs-api_structures_api.ExportType:
       type: object
       properties:
-        id:
+        title:
           type: string
-        name:
+        type:
           type: string
     conxai_com_docs-api_structures_api.UseCaseLinkToProject:
       type: object
@@ -401,17 +403,15 @@ components:
           type: string
         use_case_id:
           type: string
-    fiber.Map:
-      type: object
-      additionalProperties: true
-  requestBodies:
     conxai_com_docs-api_structures_api.PostUseCaseRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseRequest'
-      description: Use case request body
-      required: true
+      type: object
+      required:
+      - name
+      properties:
+        description:
+          type: string
+        name:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key

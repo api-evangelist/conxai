@@ -105,6 +105,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
     UserAddToProjectRequest:
       type: object
       properties:
@@ -113,13 +120,6 @@ components:
           type: string
         user_email:
           description: User email
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
           type: string
     platform.CognitoUser:
       type: object

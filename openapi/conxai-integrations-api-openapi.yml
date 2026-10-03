@@ -176,21 +176,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_structures_api.ZendeskJWTResponse:
-      type: object
-      properties:
-        token:
-          type: string
-    conxai_com_docs-api_structures_api.ZendeskErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    conxai_com_docs-api_structures_api.ExchangeBoxTokenRequest:
-      type: object
-      properties:
-        code:
-          type: string
     conxai_com_docs-api_structures_api.BoxTokenResponse:
       type: object
       properties:
@@ -201,12 +186,7 @@ components:
           type: integer
         is_connected:
           type: boolean
-    conxai_com_docs-api_structures_api.BoxRevokeResponse:
-      type: object
-      properties:
-        message:
-          type: string
-    conxai_com_docs-api_structures_api.BoxErrorResponse:
+    conxai_com_docs-api_structures_api.ZendeskErrorResponse:
       type: object
       properties:
         error:
@@ -221,6 +201,26 @@ components:
           type: integer
         is_connected:
           type: boolean
+    conxai_com_docs-api_structures_api.BoxRevokeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    conxai_com_docs-api_structures_api.ExchangeBoxTokenRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    conxai_com_docs-api_structures_api.ZendeskJWTResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    conxai_com_docs-api_structures_api.BoxErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
