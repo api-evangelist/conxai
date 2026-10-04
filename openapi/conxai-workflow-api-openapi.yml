@@ -167,12 +167,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    conxai_com_docs-api_structures_api.WorkflowContextDocumentResponse:
+    conxai_com_docs-api_structures_api.WorkflowContextDocumentListItem:
       type: object
       properties:
-        id:
+        created_at:
           type: string
-        status:
+        name:
           type: string
         url:
           type: string
@@ -183,19 +183,19 @@ components:
           type: string
         status:
           type: string
+    conxai_com_docs-api_structures_api.WorkflowContextDocumentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
     conxai_com_docs-api_structures_api.PostWorkflowContextDocumentRequest:
       type: object
       properties:
         file_name:
-          type: string
-    conxai_com_docs-api_structures_api.WorkflowContextDocumentListItem:
-      type: object
-      properties:
-        created_at:
-          type: string
-        name:
-          type: string
-        url:
           type: string
   securitySchemes:
     ApiKeyAuth:

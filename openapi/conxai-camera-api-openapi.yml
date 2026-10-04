@@ -155,7 +155,7 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    api_handlers.CameraResponse:
+    api_handlers.CameraRequest:
       type: object
       properties:
         external_id:
@@ -166,9 +166,6 @@ components:
           type: string
         project_uuid:
           description: Project uuid
-          type: string
-        uuid:
-          description: Uniq camera id
           type: string
     transformers.CameraInfoResponse:
       type: object
@@ -183,7 +180,7 @@ components:
           type: string
         project_timezone:
           type: string
-    api_handlers.CameraRequest:
+    api_handlers.CameraResponse:
       type: object
       properties:
         external_id:
@@ -194,6 +191,9 @@ components:
           type: string
         project_uuid:
           description: Project uuid
+          type: string
+        uuid:
+          description: Uniq camera id
           type: string
     ErrorResponse:
       type: object

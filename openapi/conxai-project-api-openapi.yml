@@ -227,12 +227,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    transformers.Feature:
+    transformers.ProjectSettings:
       type: object
       properties:
-        enabled:
-          type: boolean
-        key:
+        location:
+          $ref: '#/components/schemas/transformers.ProjectLocation'
+        start_date:
+          type: string
+    ProjectRequest:
+      type: object
+      properties:
+        image_cover:
+          description: Image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          $ref: '#/components/schemas/transformers.ProjectSettings'
+        uuid:
+          description: Uniq project id
           type: string
     FeaturesRequest:
       type: object
@@ -244,18 +258,6 @@ components:
             type: string
         project_id:
           description: Uniq project id
-          type: string
-    transformers.ProjectLocation:
-      type: object
-      properties:
-        lat:
-          type: number
-        long:
-          type: number
-        name:
-          type: string
-        timezone_name:
-          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
     transformers.ProjectRequest:
       type: object
@@ -273,31 +275,6 @@ components:
           description: Project settings
           allOf:
           - $ref: '#/components/schemas/transformers.ProjectSettings'
-    ProjectFeaturesResponse:
-      type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/transformers.Feature'
-        id:
-          type: integer
-        project_id:
-          type: string
-    ProjectRequest:
-      type: object
-      properties:
-        image_cover:
-          description: Image cover base64
-          type: string
-        name:
-          description: Project name
-          type: string
-        settings:
-          $ref: '#/components/schemas/transformers.ProjectSettings'
-        uuid:
-          description: Uniq project id
-          type: string
     ProjectResponse:
       type: object
       properties:
@@ -321,12 +298,35 @@ components:
         uuid:
           description: Uniq project id
           type: string
-    transformers.ProjectSettings:
+    ProjectFeaturesResponse:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/transformers.ProjectLocation'
-        start_date:
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformers.Feature'
+        id:
+          type: integer
+        project_id:
+          type: string
+    transformers.Feature:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        key:
+          type: string
+    transformers.ProjectLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        name:
+          type: string
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
     ErrorResponse:
       type: object

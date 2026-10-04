@@ -105,6 +105,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    platform.CognitoUser:
+      type: object
+      properties:
+        confirmed:
+          type: boolean
+        created_at:
+          type: string
+        email:
+          type: string
+        uuid:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -120,17 +131,6 @@ components:
           type: string
         user_email:
           description: User email
-          type: string
-    platform.CognitoUser:
-      type: object
-      properties:
-        confirmed:
-          type: boolean
-        created_at:
-          type: string
-        email:
-          type: string
-        uuid:
           type: string
   securitySchemes:
     ApiKeyAuth:

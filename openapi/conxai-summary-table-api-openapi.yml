@@ -596,49 +596,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    api_summary_table_handlers.SummaryTableSchemaRequest:
-      type: object
-    conxai_com_docs-api_structures_api.SummaryTableWorkflowResponseDoc:
-      type: object
-      properties:
-        summary_table:
-          type: object
-          additionalProperties: true
-        summary_table_workflow:
-          type: object
-          additionalProperties: true
-    conxai_com_docs-api_structures_api.SummaryTableRow:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
-    api_summary_table_handlers.SummaryTableSchemaResponse:
-      type: object
-      properties:
-        version:
-          type: string
-    conxai_com_docs-api_structures_api.SummaryTableDataExportResponse:
-      type: object
-      properties:
-        file_link:
-          type: string
-    conxai_com_docs-api_structures_api.SummaryTableDataGroupedResponse:
-      type: object
-      additionalProperties:
-        type: array
-        items: {}
-    conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
-      type: string
-      enum:
-      - success
-      - warning
-      - error
-      x-enum-varnames:
-      - SummaryTableCellMessageTypeSuccess
-      - SummaryTableCellMessageTypeWarning
-      - SummaryTableCellMessageTypeError
-    fiber.Map:
-      type: object
-      additionalProperties: true
     conxai_com_docs-api_structures_api.SummaryTableDataResponse:
       type: object
       properties:
@@ -650,31 +607,57 @@ components:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableRow'
         structure:
           $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableDataStructure'
+    conxai_com_docs-api_structures_api.SummaryTableDataExportResponse:
+      type: object
+      properties:
+        file_link:
+          type: string
+    api_summary_table_handlers.SummaryTableSchemaResponse:
+      type: object
+      properties:
+        version:
+          type: string
     api_summary_table_handlers.SummaryTableSchemaVersionResponse:
       type: object
       properties:
         version:
           type: string
+    conxai_com_docs-api_structures_api.SummaryTableWorkflowResponseDoc:
+      type: object
+      properties:
+        summary_table:
+          type: object
+          additionalProperties: true
+        summary_table_workflow:
+          type: object
+          additionalProperties: true
+    api_summary_table_handlers.SummaryTableSchemaRequest:
+      type: object
+    conxai_com_docs-api_structures_api.SummaryTableCellMessageType:
+      type: string
+      enum:
+      - success
+      - warning
+      - error
+      x-enum-varnames:
+      - SummaryTableCellMessageTypeSuccess
+      - SummaryTableCellMessageTypeWarning
+      - SummaryTableCellMessageTypeError
+    conxai_com_docs-api_structures_api.SummaryTableRow:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCell'
+    conxai_com_docs-api_structures_api.SummaryTableFilterRequest:
+      type: object
+    conxai_com_docs-api_structures_api.SummaryTableDataGroupedResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items: {}
     conxai_com_docs-api_structures_api.SummaryTableDataStructure:
       type: object
       properties:
         use_case:
-          type: string
-    conxai_com_docs-api_structures_api.SummaryTableFilterRequest:
-      type: object
-    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
           type: string
     conxai_com_docs-api_structures_api.SummaryTableCell:
       type: object
@@ -685,6 +668,23 @@ components:
           items:
             $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessage'
         value: {}
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    conxai_com_docs-api_structures_api.SummaryTableCellMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/conxai_com_docs-api_structures_api.SummaryTableCellMessageType'
   requestBodies:
     api_summary_table_handlers.SummaryTableSchemaRequest:
       content:

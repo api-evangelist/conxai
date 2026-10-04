@@ -134,26 +134,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    clients.SolutionResponse:
-      properties:
-        rle_mask:
-          $ref: '#/components/schemas/clients.RLEMask'
-        solution:
-          $ref: '#/components/schemas/clients.Solution'
-      type: object
-    clients.RLEMask:
-      properties:
-        count:
-          example: P\S25Zi0.....
-          type: string
-        size:
-          example:
-          - 640
-          - 480
-          items:
-            type: integer
-          type: array
-      type: object
     clients.Solution:
       properties:
         fire_rating:
@@ -180,6 +160,26 @@ components:
           type: string
         url:
           type: string
+      type: object
+    clients.RLEMask:
+      properties:
+        count:
+          example: P\S25Zi0.....
+          type: string
+        size:
+          example:
+          - 640
+          - 480
+          items:
+            type: integer
+          type: array
+      type: object
+    clients.SolutionResponse:
+      properties:
+        rle_mask:
+          $ref: '#/components/schemas/clients.RLEMask'
+        solution:
+          $ref: '#/components/schemas/clients.Solution'
       type: object
     ErrorResponse:
       properties:

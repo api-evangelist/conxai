@@ -257,6 +257,33 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    conxai_com_docs-api_structures_api.DocumentTypeRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    conxai_com_docs-api_structures_api.DocumentTypeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+    api_document_types_handlers.GetDocumentTypeOne:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        samples_number:
+          type: integer
+        version:
+          type: string
     api_document_types_handlers.DocumentSchemaStructure:
       type: object
       properties:
@@ -269,39 +296,12 @@ components:
     fiber.Map:
       type: object
       additionalProperties: true
-    api_document_types_handlers.GetDocumentTypeOne:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        samples_number:
-          type: integer
-        version:
-          type: string
-    conxai_com_docs-api_structures_api.DocumentTypeRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
     ErrorResponse:
       type: object
       properties:
         error:
           type: string
         status:
-          type: string
-    conxai_com_docs-api_structures_api.DocumentTypeResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        version:
           type: string
   securitySchemes:
     ApiKeyAuth:

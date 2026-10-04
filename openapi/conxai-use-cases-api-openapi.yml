@@ -304,18 +304,49 @@ paths:
       operationId: getUseCases
       x-operation-id-source: derived
 components:
-  requestBodies:
-    conxai_com_docs-api_structures_api.PostUseCaseRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseRequest'
-      description: Use case request body
-      required: true
   schemas:
-    fiber.Map:
+    conxai_com_docs-api_structures_api.PostUseCaseResponse:
       type: object
-      additionalProperties: true
+      properties:
+        id:
+          type: string
+    api_use_cases_handlers.CloneUseCaseRequest:
+      type: object
+      properties:
+        clone_document_types:
+          description: 'Optional list of document type UUIDs to clone. If not empty, only these are cloned
+
+            and summary table/schema copying is skipped. Values must be UUIDs.'
+          type: array
+          items:
+            type: string
+          example:
+          - '["3abf974f-bbca-4a01-a5b2-639c646a6d10"'
+          - '"c1e0b4f3-2c39-4a31-8e0f-6b5e3f8dc9ff"]'
+        description:
+          description: Optional description for the cloned use case
+          type: string
+          example: This is a cloned use case
+        name:
+          description: Human-readable name for the new cloned use case
+          type: string
+          example: Selling cars NEW
+    conxai_com_docs-api_structures_api.PostUseCaseRequest:
+      type: object
+      required:
+      - name
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+    conxai_com_docs-api_structures_api.LinkedProject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
     conxai_com_docs-api_structures_api.OneUseCaseResponse:
       type: object
       properties:
@@ -349,45 +380,12 @@ components:
           type: string
         summary_table_workflow_schema_version:
           type: string
-    conxai_com_docs-api_structures_api.LinkedProject:
+    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
       type: object
       properties:
-        id:
+        master_id:
           type: string
-        name:
-          type: string
-    api_use_cases_handlers.CloneUseCaseRequest:
-      type: object
-      properties:
-        clone_document_types:
-          description: 'Optional list of document type UUIDs to clone. If not empty, only these are cloned
-
-            and summary table/schema copying is skipped. Values must be UUIDs.'
-          type: array
-          items:
-            type: string
-          example:
-          - '["3abf974f-bbca-4a01-a5b2-639c646a6d10"'
-          - '"c1e0b4f3-2c39-4a31-8e0f-6b5e3f8dc9ff"]'
-        description:
-          description: Optional description for the cloned use case
-          type: string
-          example: This is a cloned use case
-        name:
-          description: Human-readable name for the new cloned use case
-          type: string
-          example: Selling cars NEW
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        status:
-          type: string
-    conxai_com_docs-api_structures_api.PostUseCaseResponse:
-      type: object
-      properties:
-        id:
+        use_case_id:
           type: string
     conxai_com_docs-api_structures_api.ExportType:
       type: object
@@ -396,22 +394,24 @@ components:
           type: string
         type:
           type: string
-    conxai_com_docs-api_structures_api.UseCaseLinkToProject:
+    fiber.Map:
+      type: object
+      additionalProperties: true
+    ErrorResponse:
       type: object
       properties:
-        master_id:
+        error:
           type: string
-        use_case_id:
+        status:
           type: string
+  requestBodies:
     conxai_com_docs-api_structures_api.PostUseCaseRequest:
-      type: object
-      required:
-      - name
-      properties:
-        description:
-          type: string
-        name:
-          type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/conxai_com_docs-api_structures_api.PostUseCaseRequest'
+      description: Use case request body
+      required: true
   securitySchemes:
     ApiKeyAuth:
       description: Provide the given API key
