@@ -134,6 +134,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    clients.SuccessResponse:
+      properties:
+        image_id:
+          format: uuid
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+      type: object
     clients.Solution:
       properties:
         fire_rating:
@@ -151,14 +161,11 @@ components:
         supporting_structure:
           type: string
       type: object
-    clients.SuccessResponse:
+    ErrorResponse:
       properties:
-        image_id:
-          format: uuid
+        error:
           type: string
         status:
-          type: string
-        url:
           type: string
       type: object
     clients.RLEMask:
@@ -180,13 +187,6 @@ components:
           $ref: '#/components/schemas/clients.RLEMask'
         solution:
           $ref: '#/components/schemas/clients.Solution'
-      type: object
-    ErrorResponse:
-      properties:
-        error:
-          type: string
-        status:
-          type: string
       type: object
   securitySchemes:
     X-Api-Key:

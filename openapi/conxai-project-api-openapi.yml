@@ -227,54 +227,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    transformers.ProjectSettings:
+    transformers.ProjectLocation:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/transformers.ProjectLocation'
-        start_date:
-          type: string
-    ProjectRequest:
-      type: object
-      properties:
-        image_cover:
-          description: Image cover base64
-          type: string
+        lat:
+          type: number
+        long:
+          type: number
         name:
-          description: Project name
           type: string
-        settings:
-          $ref: '#/components/schemas/transformers.ProjectSettings'
-        uuid:
-          description: Uniq project id
+        timezone_name:
+          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
-    FeaturesRequest:
-      type: object
-      properties:
-        features:
-          description: New Features to update
-          type: array
-          items:
-            type: string
-        project_id:
-          description: Uniq project id
-          type: string
-    transformers.ProjectRequest:
-      type: object
-      properties:
-        external_id:
-          description: Project external id
-          type: string
-        image_cover:
-          description: Project image cover base64
-          type: string
-        name:
-          description: Project name
-          type: string
-        settings:
-          description: Project settings
-          allOf:
-          - $ref: '#/components/schemas/transformers.ProjectSettings'
     ProjectResponse:
       type: object
       properties:
@@ -298,6 +262,27 @@ components:
         uuid:
           description: Uniq project id
           type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+    ProjectRequest:
+      type: object
+      properties:
+        image_cover:
+          description: Image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          $ref: '#/components/schemas/transformers.ProjectSettings'
+        uuid:
+          description: Uniq project id
+          type: string
     ProjectFeaturesResponse:
       type: object
       properties:
@@ -309,6 +294,22 @@ components:
           type: integer
         project_id:
           type: string
+    transformers.ProjectRequest:
+      type: object
+      properties:
+        external_id:
+          description: Project external id
+          type: string
+        image_cover:
+          description: Project image cover base64
+          type: string
+        name:
+          description: Project name
+          type: string
+        settings:
+          description: Project settings
+          allOf:
+          - $ref: '#/components/schemas/transformers.ProjectSettings'
     transformers.Feature:
       type: object
       properties:
@@ -316,24 +317,23 @@ components:
           type: boolean
         key:
           type: string
-    transformers.ProjectLocation:
+    FeaturesRequest:
       type: object
       properties:
-        lat:
-          type: number
-        long:
-          type: number
-        name:
+        features:
+          description: New Features to update
+          type: array
+          items:
+            type: string
+        project_id:
+          description: Uniq project id
           type: string
-        timezone_name:
-          description: timezone list of possible timezones - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          type: string
-    ErrorResponse:
+    transformers.ProjectSettings:
       type: object
       properties:
-        error:
-          type: string
-        status:
+        location:
+          $ref: '#/components/schemas/transformers.ProjectLocation'
+        start_date:
           type: string
   securitySchemes:
     ApiKeyAuth:
